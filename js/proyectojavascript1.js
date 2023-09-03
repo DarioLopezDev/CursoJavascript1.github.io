@@ -26,17 +26,27 @@ do {
     duracionDelEvento = parseInt (prompt("Ingrese la Cantidad de horas que durara el evento"))
 console.log (duracionDelEvento)}
 while (isNaN(duracionDelEvento));
-let frioCalor
-do {
-    frioCalor = parseInt (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
-    console.log (frioCalor)}
-while (1(frioCalor) ||  2(frioCalor));
 
-if (frioCalor == 1)
-frioCalor = coeffrio
-else if (frioCalor ==2)
-frioCalor = coefcalor
+let frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
 console.log (frioCalor)
+
+if (frioCalor == 1) {
+frioCalor = coeffrio}
+else if (frioCalor == 2){
+frioCalor = coefcalor}
+//else (frioCalor != coeffrio | coefcalor){ 
+//    alert("por favor ingrese un numero valido")
+//    frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
+//}
+console.log (frioCalor)
+gaseosas = [adultos + ninios] * coefgaseosas * duracionDelEvento * frioCalor
+cervezas = adultos * coefcerveza * duracionDelEvento * frioCalor
+fernet = adultos * coeffernet * duracionDelEvento * frioCalor
+
+if (frioCalor == coeffrio) {
+    frioCalor = "Frio"}
+    else if (frioCalor == coefcalor){
+    frioCalor = "Calor"}
 //muestra en pantalla los resultados
 alert(`
 Cantidad de Adultos:            ${adultos}
@@ -48,7 +58,6 @@ La Cantidad de Gaseosas recomendada es ${gaseosas} litros.
 La Cantidad de Cervezas recomendada es ${cervezas} litros.
 La Cantidad de Fernet recomendada es ${fernet} litros.
 
-Estamos felices que hayas podido utilizar nuestro simulador para el calculo de su evento
-    por favor no se olvide de tomarle una foto con su celular a los resultados
+Estamos felices que hayas podido utilizar nuestro simulador para el calculo de su evento por favor no se olvide de tomarle una foto con su celular a los resultados
                                     MUCHAS GRACIAS.
 `)
