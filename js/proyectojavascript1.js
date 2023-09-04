@@ -26,23 +26,24 @@ do {
     duracionDelEvento = parseInt (prompt("Ingrese la Cantidad de horas que durara el evento"))
 console.log (duracionDelEvento)}
 while (isNaN(duracionDelEvento));
-
-let frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
-console.log (frioCalor)
-
+let frioCalor
+do {
+frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
+}
+while (frioCalor != 1 && frioCalor != 2){
+}
+//si el usuario eligio frio convierte a la variable frioCalor al coeficiente de frio y si el usuario eligio calor a su respectivo coeficiente.
 if (frioCalor == 1) {
-frioCalor = coeffrio}
-else if (frioCalor == 2){
-frioCalor = coefcalor}
-//else (frioCalor != coeffrio | coefcalor){ 
-//    alert("por favor ingrese un numero valido")
-//    frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
-//}
+    frioCalor = coeffrio}
+    else if (frioCalor == 2){
+    frioCalor = coefcalor}
+
 console.log (frioCalor)
+//calculos de bebida
 gaseosas = [adultos + ninios] * coefgaseosas * duracionDelEvento * frioCalor
 cervezas = adultos * coefcerveza * duracionDelEvento * frioCalor
 fernet = adultos * coeffernet * duracionDelEvento * frioCalor
-
+//indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
 if (frioCalor == coeffrio) {
     frioCalor = "Frio"}
     else if (frioCalor == coefcalor){
