@@ -75,9 +75,9 @@ Cantidad de Niños:              ${n}
 Duracion del Evento en Horas:   ${d}
 Epoca de : ${fc}
 
-La Cantidad de Gaseosas recomendada es ${gaseosas} litros.
-La Cantidad de Cervezas recomendada es ${cervezas} litros.
-La Cantidad de Fernet recomendada es ${fernet} litros.
+La Cantidad de Gaseosas recomendada es ${gaseosas.toFixed(0)} litros.
+La Cantidad de Cervezas recomendada es ${cervezas.toFixed(0)} litros.
+La Cantidad de Fernet recomendada es ${fernet.toFixed(0)} litros.
 
 Estamos felices que hayas podido utilizar nuestro simulador para el calculo de su evento por favor no se olvide de tomarle una foto con su celular a los resultados
                                     MUCHAS GRACIAS.`)
