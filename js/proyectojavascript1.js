@@ -10,37 +10,58 @@ let coefcalor = 1.18
 let gaseosas
 let cervezas
 let fernet
-//variables que tiene que completar el usuario
+//defino las funciones y variables que tiene que completar el usuario
+let adultos
+let ninios
+let duracionDelEvento
+let frioCalor
+
+function cantidadAdultos() {
 let adultos
 do {
     adultos = parseInt (prompt("Ingrese la cantidad de adultos que asistiran al evento"))
 console.log (adultos)}
 while (isNaN(adultos));
+return (adultos)
+}
+function cantidadNinios() {
 let ninios
 do {
     ninios = parseInt (prompt("Ingrese la cantidad de niños que asistiran al evento"))
 console.log (ninios)}
 while (isNaN(ninios));
+return (ninios)
+}
+function duracionEvento () {
 let duracionDelEvento
 do {
     duracionDelEvento = parseInt (prompt("Ingrese la Cantidad de horas que durara el evento"))
 console.log (duracionDelEvento)}
 while (isNaN(duracionDelEvento));
+return (duracionDelEvento)
+}
+
+function consultafrioocalor () {
 let frioCalor
 do {
 frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
 }
-while (frioCalor != 1 && frioCalor != 2){
-}
+while (frioCalor != 1 && frioCalor != 2)
 //si el usuario eligio frio convierte a la variable frioCalor al coeficiente de frio y si el usuario eligio calor a su respectivo coeficiente.
 if (frioCalor == 1) {
     frioCalor = coeffrio}
-    else if (frioCalor == 2){
+else if (frioCalor == 2){
     frioCalor = coefcalor}
-
 console.log (frioCalor)
+return(frioCalor)
+}
+//ejecuto las funciones
+cantidadAdultos ()
+cantidadNinios ()
+duracionEvento ()
+consultafrioocalor ()
 //calculos de bebida
-gaseosas = [adultos + ninios] * coefgaseosas * duracionDelEvento * frioCalor
+gaseosas = [cantidadAdultos () + cantidadNinios ()] * coefgaseosas * duracionEvento () * consultafrioocalor ()
 cervezas = adultos * coefcerveza * duracionDelEvento * frioCalor
 fernet = adultos * coeffernet * duracionDelEvento * frioCalor
 //indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
