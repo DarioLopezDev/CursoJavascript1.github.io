@@ -81,3 +81,191 @@ La Cantidad de Fernet recomendada es ${fernet.toFixed(0)} litros.
 
 Estamos felices que hayas podido utilizar nuestro simulador para el calculo de su evento por favor no se olvide de tomarle una foto con su celular a los resultados
                                     MUCHAS GRACIAS.`)
+//creo una variable que sera el array de las gaseosas.
+const tiposDeGaseosas = []
+
+//creo objetos gaseosas
+const gaseosa1 = {
+    marca: cocaCola,
+    sabor: cola,
+    medida: 3,
+    unidadMedida: litros,
+    botellasPorFardo: 6,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 5000,
+    moneda: pesosArgentinos
+
+}
+const gaseosa2 = {
+    marca: sprite,
+    sabor: limaLimon,
+    medida: 3,
+    unidadMedida: litros,
+    botellasPorFardo: 6,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 5000,
+    moneda: pesosArgentinos
+}
+const gaseosa3 = {
+    marca: fanta,
+    sabor: naranja,
+    medida: 3,
+    unidadMedida: litros,
+    botellasPorFardo: 6,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 5000,
+    moneda: pesosArgentinos
+}
+const gaseosa4 = {
+    marca: pepsi,
+    sabor: cola,
+    medida: 3,
+    unidadMedida: litros,
+    botellasPorFardo: 6,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 4200,
+    moneda: pesosArgentinos
+}
+const gaseosa5 = {
+    marca: pepsi,
+    sabor: cola,
+    medida: 2.25,
+    unidadMedida: litros,
+    botellasPorFardo: 8,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 4200,
+    moneda: pesosArgentinos
+}
+const gaseosa6 = {
+    marca: mirinda,
+    sabor: manzana,
+    medida: 2.25,
+    unidadMedida: litros,
+    botellasPorFardo: 8,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 4200,
+    moneda: pesosArgentinos
+}
+const gaseosa7 = {
+    marca: pasoDeLosToros,
+    sabor: pomelo,
+    medida: 2.25,
+    unidadMedida: litros,
+    botellasPorFardo: 8,
+    pesoDelFardo: 18,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 4200,
+    moneda: pesosArgentinos
+}
+const gaseosa8 = {
+    marca: cocaCola,
+    sabor: cola,
+    medida: 0.375,
+    unidadMedida: litros,
+    botellasPorFardo: 6,
+    pesoDelFardo: 2.5,
+    unidadPeso: kilos,
+    litrosPorFardo: function () {
+        return this.botellasPorFardo * this.medida
+    },
+    precioFardo: 2200,
+    moneda: pesosArgentinos
+}
+//hago push dentro del array con todos los objetos gaseosas
+tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gaseosa7,gaseosa8
+)
+console.log(tiposDeGaseosas.length)
+//creo una variable que sera el array de los vinos
+const tiposDeVinos = []
+//defino objetos vinos
+const vinos1 = {
+    marca: almaMora,
+    sabor: malbec,
+    medida: 0.750,
+    unidadMedida: litros,
+    botellasPorCaja: 6,
+    pesoCaja: 5.5,
+    unidadPeso: kilos,
+    litrosPorCaja: function () {
+        return this.botellasPorCaja * this.medida
+    },
+    precioCaja: 8400,
+    moneda: pesosArgentinos
+}
+const vinos2 = {
+    marca: estanciaMendoza,
+    sabor: bivarietal1,
+    medida: 0.750,
+    unidadMedida: litros,
+    botellasPorCaja: 6,
+    pesoCaja: 5.5,
+    unidadPeso: kilos,
+    litrosPorCaja: function () {
+        return this.botellasPorCaja * this.medida
+    },
+    precioCaja: 6000,
+    moneda: pesosArgentinos
+}
+const vinos3 = {
+    marca: nortonCosechaTardia,
+    sabor: blancoDulce,
+    medida: 0.750,
+    unidadMedida: litros,
+    botellasPorCaja: 6,
+    pesoCaja: 5.5,
+    unidadPeso: kilos,
+    litrosPorCaja: function () {
+        return this.botellasPorCaja * this.medida
+    },
+    precioCaja: 8400,
+    moneda: pesosArgentinos
+}
+//hago push en el array de los vinos
+tiposDeVinos.push (vinos1,vinos2,vinos3)
+console.log(tiposDeVinos.length)
+//aunque solo haya un fernet en este calculo creo igual un array para futuros fernet y medidas de fernet
+const tiposDeFernet = []
+//defino objeto fernet
+const fernet750 = {
+    marca: branca,
+    sabor: clasico,
+    medida: 0.750,
+    unidadMedida: litros,
+    botellasPorCaja: 12,
+    pesoCaja: 12,
+    unidadPeso: kilos,
+    litrosPorCaja: function () {
+        return this.botellasPorCaja * this.medida
+    },
+    precioCaja: 42000,
+    moneda: pesosArgentinos
+}
+//hago push sobre el array de fernet.
+tiposDeFernet.push (fernet750)
