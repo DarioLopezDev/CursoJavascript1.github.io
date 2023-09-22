@@ -214,7 +214,7 @@ const cerveza1 = {
     medida: 0.473,
     unidadMedida: "Litros",
     latasPorFardo: 24,
-    pesoFardo: 12,
+    pesoDelFardo: 12,
     unidadPeso: "Kilos",
     litrosPorFardo: 11.352,
     precioFardo: 9200,
@@ -222,12 +222,12 @@ const cerveza1 = {
 }
 console.log (cerveza1)
 const cerveza2 = {
-    marca: "Imperial Golden",
-    sabor: "Lager",
+    marca: "Imperial",
+    sabor: "Golden",
     medida: 0.473,
     unidadMedida: "Litros",
     latasPorFardo: 24,
-    pesoFardo: 12,
+    pesoDelFardo: 12,
     unidadPeso: "Kilos",
     litrosPorFardo: 11.352,
     precioFardo: 9300,
@@ -240,7 +240,7 @@ const cerveza3 = {
     medida: 0.473,
     unidadMedida: "Litros",
     latasPorFardo: 24,
-    pesoFardo: 12,
+    pesoDelFardo: 12,
     unidadPeso: "Kilos",
     litrosPorFardo: 11.352,
     precioCaja: 9000,
@@ -260,7 +260,7 @@ const fernet750 = {
     medida: 0.750 ,
     unidadMedida: "Litros",
     botellasPorCaja: 12 ,
-    pesoCaja: 12,
+    pesoDeLaCaja: 12,
     unidadPeso: "Kilos",
     litrosPorCaja: 9,
     precioCaja: 42000,
@@ -277,7 +277,7 @@ console.log (listadoDeBebidas)
 //------------------------------------------------------------------------------------------------------------
 
 //Menu que pregunte que gaseosas usar
-let salinrMenu = false
+let salirMenu = false
 //genero las variables acumuladoras para cada gaseosa.
 let fardosGaseosaCola
 let fardosGaseosaSprite
@@ -313,10 +313,7 @@ let opcionIngresada = parseInt(prompt(`lo recomendado para su evento en gaseosas
         salirMenu = true
         break
          case 2:
-        gaseosaCola = 0
         alert(`Estamos en mantenimiento, por favor ingrese en la tercera preentrega, sera un acceso a la pagina web donde deberia elegir los fardos por su propia cuenta`)
-        console.log(gaseosaCola)
-         salirMenu = true
         break
       default:
          console.log("Opción no válida, ingrese alguna presente en el menu")
@@ -324,182 +321,91 @@ let opcionIngresada = parseInt(prompt(`lo recomendado para su evento en gaseosas
    }
 } while(!salirMenu)
 
+//------------------------------------------------------------------------------------------------------------
 
-/*
-        21 - Quiero que todos tomen Coca de 3L
-        22 - Quiero que los Adultos tomen Coca de 3L y los niños Coca de 375ml
-        23 - Quiero que todos tomen Pepsi de 3L o de 2.25L (fernet con Pepsi)
-        24 - Quiero que los Adultos tomen Pepsi de 3L o de 2.25L y los niños Coca de 375ml
-        25 - Quiero que todos tomen Pepsi de 3L o de 2.25L (En los adultos el fernet si o si con Coca 3L)
-        26 - Quiero que los Adultos tomen Pepsi de 3L o de 2.25L y los niños Coca de 375ml (En losj adultos el fernet si o si con Coca 3L)
+//Menu que pregunte que cervezas usar
+//genero las variables acumuladoras para cada cerveza.
+let fardosCervezaImperial
+let fardosCervezaImperialGolden
+let fardosCervezaQuilmes
 
-        31 - sacar la sprite
-        311 - sacar la sprite y la fanta
-        312 - sacar la sprite y la Mirinda Manzana
-        313 - sacar la sprite y la paso de los toros Pomelo
-    32 - sacar la fanta
-    33 - sacar la Mirinda Manzana
-    34 - sacar la Paso de los toros Pomelo */
-
-/*
-   2 - ${gaseosa4.marca+" "+gaseosa4.medida+" "+gaseosa4.unidadMedida}
-   3 - ${gaseosa5.marca+" "+gaseosa5.medida+" "+gaseosa5.unidadCMedida}
-
-   switch(opcionIngresada){
+do{
+let opcionIngresada = parseInt(prompt(`
+    Elija por favor ingresando la opcion numerica que desea (1, 2, 3) si desea elegir 2 variedades o mas de cervezas elija la opcion 4
+    1 - Cerveza Imperial
+    2 - Cerveza Imperial Golden
+    3 - Quilmes Clasica
+    4 - elegir 2 o mas variedades de cerveza
+    `))
+3
+    switch(opcionIngresada){
         case 1:
-        gaseosaColaAdultos = gaseosa1
-        console.log(gaseosaColaAdultos)
+        fardosCervezaImperial = (cervezas/cerveza1.litrosPorFardo)
+        pesoTotalCerveza = fardosCervezaImperial * cerveza1.pesoDelFardo
+        alert(`Se recomienda:
+        |||  ${fardosCervezaImperial.toFixed(0)}      Fardos de Cerveza Imperial Lager 473cc x 24  unidades.
+        |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
+        `)
+        
+        console.log(`Se recomienda ${fardosCervezaImperial.toFixed(0)} fardos de cerveza Imperial Lager`)
         salirMenu = true
         break
          case 2:
-        gaseosaColaAdultos = gaseosa4
-        console.log(gaseosaColaAdultos)
-         salirMenu = true
-      break
-      case 3:
-        gaseosaColaAdultos = gaseosa5
-      console.log(gaseosaColaAdultos)
-      salirMenu = true
-      break         
-      case 0:
-        gaseosaColaAdultos = 0
-        alert ("Usted decidio no utilizar bebidas sabor cola en su evento")
-         console.log(`no utiliza sabor cola en el evento`)
-         salirMenu = true
-      break   
+          fardosCervezaImperialGolden = (cervezas/cerveza2.litrosPorFardo)
+          pesoTotalCerveza = fardosCervezaImperialGolden * cerveza2.pesoDelFardo
+          alert(`Se recomienda:
+          |||  ${fardosCervezaImperialGolden.toFixed(0)}      Fardos de Cerveza Imperial Golden 473cc x 24  unidades.
+          |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
+          `)
+          
+          console.log(`Se recomienda ${fardosCervezaImperialGolden.toFixed(0)} fardos de cerveza Imperial Golden`)
+          salirMenu = true
+        break
+        case 3:
+          fardosCervezaQuilmes = (cervezas/cerveza3.litrosPorFardo)
+          pesoTotalCerveza = fardosCervezaQuilmes * cerveza3.pesoDelFardo
+          alert(`Se recomienda:
+          |||  ${fardosCervezaQuilmes.toFixed(0)}      Fardos de Cerveza Quilmes Clasica 473cc x 24  unidades.
+          |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
+          `)
+          
+          console.log(`Se recomienda ${fardosCervezaQuilmes.toFixed(0)} fardos de cerveza Quilmes Clasica`)
+          salirMenu = true
+        break
+        case 4:
+          alert(`Estamos en mantenimiento, por favor ingrese en la tercera preentrega, sera un acceso a la pagina web donde deberia elegir los fardos por su propia cuenta`)
+        break
       default:
          console.log("Opción no válida, ingrese alguna presente en el menu")
       break
    }
-}while(!salirMenu) */
+} while(!salirMenu)
 
+//------------------------------------------------------------------------------------------
 
+//Menu que pregunte que fernet se va usar
+//genero la variable acumuladora para el unico fernet cargado.
+let cajasFernet
 
-
-
-
-
-
-
-
-/*//Menu que pregunte si desea usar Gaseosas sabor cola en su evento para los adultos
-let salirMenu = false
-//genero la variable acumulador para gaseosas sabor cola en adultos
-let gaseosaColaAdultos
 do{
-let opcionIngresada = parseInt(prompt(`Ingrese la Preferencia de su bebida sabor Cola para los Adultos
-   1 - ${gaseosa1.marca+" "+gaseosa1.medida+" "+gaseosa1.unidadMedida}
-   2 - ${gaseosa4.marca+" "+gaseosa4.medida+" "+gaseosa4.unidadMedida}
-   3 - ${gaseosa5.marca+" "+gaseosa5.medida+" "+gaseosa5.unidadMedida}
-   0 - Salir del menu, los adultos no consumiran gaseosas sabor Cola en el evento`))
-   switch(opcionIngresada){
+let opcionIngresada = parseInt(prompt(`
+    Elija por favor ingresando la opcion numerica disponible (1)
+    1 - Fernet Branca 750 ml
+    `))
+    switch(opcionIngresada){
         case 1:
-        gaseosaColaAdultos = gaseosa1
-        console.log(gaseosaColaAdultos)
+        cajasFernet = (fernet/fernet750.litrosPorCaja)
+        pesoTotalFernet = cajasFernet * fernet750.pesoDeLaCaja
+        alert(`Se recomienda:
+        |||  ${cajasFernet.toFixed(0)}      Cajas de Fernet, las mismas traen 12 botellas por caja.
+        |||  ${pesoTotalFernet.toFixed(0)} Kilos pesan en total las cajas de Fernet.
+        `)
+        
+        console.log(`Se recomienda ${cajasFernet.toFixed(0)} cajas de Fernet 750ml`)
         salirMenu = true
         break
-         case 2:
-        gaseosaColaAdultos = gaseosa4
-        console.log(gaseosaColaAdultos)
-         salirMenu = true
-      break
-      case 3:
-        gaseosaColaAdultos = gaseosa5
-      console.log(gaseosaColaAdultos)
-      salirMenu = true
-      break         
-      case 0:
-        gaseosaColaAdultos = 0
-        alert ("Usted decidio no utilizar bebidas sabor cola en su evento")
-         console.log(`no utiliza sabor cola en el evento`)
-         salirMenu = true
-      break   
       default:
          console.log("Opción no válida, ingrese alguna presente en el menu")
       break
    }
-}while(!salirMenu)
-
-//Menu que pregunte si desea usar Gaseosas sabor cola en su evento para los niños
-//genero la variable acumulador para gaseosas sabor cola en niños
-let gaseosaColaNinios
-do{
-let opcionIngresada = parseInt(prompt(`Ingrese la Preferencia de su bebida sabor Cola para los Ninios
-   1 - ${gaseosa1.marca+" "+gaseosa1.medida+" "+gaseosa1.unidadMedida}
-   2 - ${gaseosa4.marca+" "+gaseosa4.medida+" "+gaseosa4.unidadMedida}
-   3 - ${gaseosa5.marca+" "+gaseosa5.medida+" "+gaseosa5.unidadMedida}
-   4 - ${gaseosa8.marca+" "+gaseosa8.medida+" "+gaseosa8.unidadMedida}
-   0 - Salir del menu, los ninios no consumiran gaseosas sabor Cola en el evento`))
-   switch(opcionIngresada){
-      case 1:
-        gaseosaColaNinios = gaseosa1
-      console.log(gaseosaColaNinios)
-      salirMenu = true
-      break
-      case 2:
-        gaseosaColaNinios = gaseosa4
-      console.log(gaseosaColaNinios)
-      salirMenu = true
-      break
-      case 3:
-        gaseosaColaNinios = gaseosa5
-      console.log(gaseosaColaNinios)
-      salirMenu = true
-      break         
-      case 4:
-        gaseosaColaNinios = gaseosa8
-      console.log(gaseosaColaNinios)
-      salirMenu = true
-      break
-      case 0:
-        alert ("Usted no desea utilizar bebidas sabor cola para los niños en su evento")
-         console.log(`no utiliza sabor cola en el evento`)
-         salirMenu = true
-      break   
-      default:
-         console.log("Opción no válida, ingrese alguna presente en el menu")
-      break
-   }
-}while(!salirMenu)
-
-//Menu que pregunte si desea usar Gaseosas de sabores en su evento
-//genero la variable acumulador para gaseosas de sabores
-let gaseosaSabores
-do{
-let opcionIngresada = parseInt(prompt(`Ingrese la Preferencia de su bebida de sabores
-    1 - ${gaseosa2.marca+" "+gaseosa2.medida+" "+gaseosa2.unidadMedida}
-    2 - ${gaseosa3.marca+" "+gaseosa3.medida+" "+gaseosa3.unidadMedida}
-    3 - ${gaseosa6.marca+" "+gaseosa6.medida+" "+gaseosa6.unidadMedida}
-    4 - ${gaseosa7.marca+" "+gaseosa7.medida+" "+gaseosa7.unidadMedida}
-    0 - Salir del menu, no consumiran gaseosas de sabores en el evento`))
-    switch(opcionIngresada) {
-    case 1:
-    gaseosaSabores = gaseosa2
-    console.log(gaseosaSabores)
-    salirMenu = true
-    break
-    case 2:
-        gaseosaSabores = gaseosa3
-      console.log(gaseosaSabores)
-      salirMenu = true
-      break
-      case 3:
-        gaseosaSabores = gaseosa6
-      console.log(gaseosaSabores)
-      salirMenu = true
-      break         
-      case 4:
-        gaseosaSabores = gaseosa7
-      console.log(gaseosaSabores)
-      salirMenu = true
-      break
-      case 0:
-        alert ("Usted no desea utilizar bebidas de sabores en su evento")
-         console.log(`no utiliza sabores en el evento`)
-         salirMenu = true
-      break   
-      default:
-         console.log("Opción no válida, ingrese alguna presente en el menu")
-      break
-   }
-} while(!salirMenu);*/
+} while(!salirMenu)
