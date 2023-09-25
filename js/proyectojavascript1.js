@@ -54,26 +54,26 @@ console.log (frioCalor)
 return (frioCalor)
 }
 //Ejecuto las funciones, declaro y asigno variables para cada retorno.
-let a = cantidadAdultos();
-let n = cantidadNinios();
-let d = duracionEvento();
-let fc = consultafrioocalor();
+let cantAdultos = cantidadAdultos();
+let cantNinios = cantidadNinios();
+let duraEvento = duracionEvento();
+let frioCalorRetorno = consultafrioocalor();
 
 //calculos de bebida
-gaseosas = (a + n) * coefgaseosas * d * fc
-cervezas = a * coefcerveza * d * fc
-fernet = a * coeffernet * d * fc
+gaseosas = (cantAdultos + cantNinios) * coefgaseosas * duraEvento * frioCalorRetorno
+cervezas = cantAdultos * coefcerveza * duraEvento * frioCalorRetorno
+fernet = cantAdultos * coeffernet * duraEvento * frioCalorRetorno
 //indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
-if (fc == coeffrio) {
-    fc = "Frio"}
-    else if (fc == coefcalor){
-    fc = "Calor"}
+if (frioCalorRetorno == coeffrio) {
+    frioCalorRetorno = "Frio"}
+    else if (frioCalorRetorno == coefcalor){
+    frioCalorRetorno = "Calor"}
 //muestra en pantalla los resultados
 alert(`
-Cantidad de Adultos:            ${a}
-Cantidad de Niños:              ${n}
-Duracion del Evento en Horas:   ${d}
-Epoca de : ${fc}
+Cantidad de Adultos:            ${cantAdultos}
+Cantidad de Niños:              ${cantNinios}
+Duracion del Evento en Horas:   ${duraEvento}
+Epoca de : ${frioCalorRetorno}
 
 La Cantidad de Gaseosas recomendada es ${gaseosas.toFixed(0)} litros.
 La Cantidad de Cervezas recomendada es ${cervezas.toFixed(0)} litros.
@@ -146,7 +146,7 @@ const gaseosa4 = {
 console.log (gaseosa4)
 
 const gaseosa5 = {
-    marca: "Pepsi",
+    marca: "Pepsi2",
     sabor: "Cola",
     medida: 2.25,
     unidadMedida: "Litros",
@@ -289,19 +289,18 @@ let opcionIngresada = parseInt(prompt(`lo recomendado para su evento en gaseosas
 
     60% Gaseosa Cola, 20 % sprite, 10% fanta, 5% Mirinda Manzana, 5% Paso de los toros Pomelo
     Elija por favor ingresando la opcion numerica que desea (1 o 2)
-    1 - ok, me parece perfecto.(Calculo Rapido De Fardos)
-    2 - Conozco del tema y quisiera calcular y elegir de forma personalizada los fardos de gaseosa`))
-3
+    1 - ok, me parece perfecto.(Calculo Rapido De Fardos con Coca de 3L como principal)
+    2 - ok, me parece perfecto.(Calculo Rapido de Fardos con Gaseosa Principal a Eleccion en vez de la Coca de 3L).`))
     switch(opcionIngresada){
         case 1:
         fardosGaseosaCola = (gaseosas/gaseosa1.litrosPorFardo)*0.6
-        fardosGaseosaSprite = (gaseosas/gaseosa1.litrosPorFardo)*0.2
-        fardosGaseosaFanta = (gaseosas/gaseosa1.litrosPorFardo)*0.1
-        fardosGaseosaMirindaM = (gaseosas/gaseosa1.litrosPorFardo)*0.05
-        fardosGaseosaPomelo = (gaseosas/gaseosa1.litrosPorFardo)*0.05
+        fardosGaseosaSprite = (gaseosas/gaseosa2.litrosPorFardo)*0.2
+        fardosGaseosaFanta = (gaseosas/gaseosa3.litrosPorFardo)*0.1
+        fardosGaseosaMirindaM = (gaseosas/gaseosa6.litrosPorFardo)*0.05
+        fardosGaseosaPomelo = (gaseosas/gaseosa7.litrosPorFardo)*0.05
         pesoTotalGaseosa = (fardosGaseosaCola * (gaseosa1.pesoDelFardo) + fardosGaseosaSprite * (gaseosa2.pesoDelFardo) + fardosGaseosaFanta * (gaseosa3.pesoDelFardo) + fardosGaseosaMirindaM * (gaseosa6.pesoDelFardo) + fardosGaseosaPomelo * (gaseosa7.pesoDelFardo))
         alert(`Se recomienda:
-        |||  ${fardosGaseosaCola.toFixed(0)}      Fardos de Coca Cola 3L o Pepsi de 3L o Pepsi de 2.25
+        |||  ${fardosGaseosaCola.toFixed(0)}      Fardos de Coca Cola 3L 
         |||  ${fardosGaseosaSprite.toFixed(0)}    Fardos de Sprite
         |||  ${fardosGaseosaFanta.toFixed(0)}     Fardos de Fanta naranja
         |||  ${fardosGaseosaMirindaM.toFixed(0)}  Fardos de Mirinda manzana
@@ -309,11 +308,42 @@ let opcionIngresada = parseInt(prompt(`lo recomendado para su evento en gaseosas
         |||  ${pesoTotalGaseosa.toFixed(0)} Kilos pesan en total las gaseosas.
         `)
         
-        console.log(`Se recomienda ${fardosGaseosaCola.toFixed(0)} fardos de Coca Cola 3L o pepsi de 3L o pepsi de 2.25, los fardos de sprite son ${fardosGaseosaSprite.toFixed(0)}, los fardos de fanta son ${fardosGaseosaFanta.toFixed(0)}, los fardos de mirinda son ${fardosGaseosaMirindaM.toFixed(0)} y por ultimo los fardos de Paso de los toros pomelo son ${fardosGaseosaPomelo.toFixed(0)}`)
+        console.log(`Se recomienda ${fardosGaseosaCola.toFixed(0)} fardos de Coca Cola 3L , los fardos de sprite son ${fardosGaseosaSprite.toFixed(0)}, los fardos de fanta son ${fardosGaseosaFanta.toFixed(0)}, los fardos de mirinda son ${fardosGaseosaMirindaM.toFixed(0)} y por ultimo los fardos de Paso de los toros pomelo son ${fardosGaseosaPomelo.toFixed(0)}`)
         salirMenu = true
         break
          case 2:
-        alert(`Estamos en mantenimiento, por favor ingrese en la tercera preentrega, sera un acceso a la pagina web donde deberia elegir los fardos por su propia cuenta`)
+            //Realizo una funcion de busqueda para que el usuario pueda reemplazar por la gaseosa que quiera a la coca de 3L predeterminada como principal.
+            function buscarGaseosa (array) {
+                let valorABuscar = prompt (`ingrese la bebida que desea reemplazar por la coca cola 3L predeterminada como principal "${gaseosa4.marca} o ${gaseosa5.marca}" `)
+                let busqueda = array.find ((elem) =>{ return elem.marca.toLowerCase() == valorABuscar.toLowerCase()})
+                if (busqueda == undefined){
+                    alert(`La gaseosa que usted busca no se encuentra disponible`)
+                    console.log(`la gaseosa no se encontro`)
+                } else {
+                    alert(`usted eligio ${busqueda.marca} ${busqueda.sabor} de ${busqueda.medida} litros, la misma trae ${busqueda.botellasPorFardo} botellas por fardo y trae ${busqueda.litrosPorFardo} litros por fardo. 
+                    Por favor presione Enter para ver el calculo completo con la gaseosa elegida. Muchas gracias.`)
+
+        fardosGaseosaElegida = (gaseosas/busqueda.litrosPorFardo)*0.6
+        fardosGaseosaSprite = (gaseosas/gaseosa2.litrosPorFardo)*0.2
+        fardosGaseosaFanta = (gaseosas/gaseosa3.litrosPorFardo)*0.1
+        fardosGaseosaMirindaM = (gaseosas/gaseosa6.litrosPorFardo)*0.05
+        fardosGaseosaPomelo = (gaseosas/gaseosa7.litrosPorFardo)*0.05
+        pesoTotalGaseosa = (fardosGaseosaElegida * (busqueda.pesoDelFardo) + fardosGaseosaSprite * (gaseosa2.pesoDelFardo) + fardosGaseosaFanta * (gaseosa3.pesoDelFardo) + fardosGaseosaMirindaM * (gaseosa6.pesoDelFardo) + fardosGaseosaPomelo * (gaseosa7.pesoDelFardo))
+        alert(`Se recomienda:
+        |||  ${fardosGaseosaElegida.toFixed(0)}   "Fardos de  ${busqueda.marca} ${busqueda.sabor} de ${busqueda.medida} litros"
+        |||  ${fardosGaseosaSprite.toFixed(0)}    "Fardos de Sprite"
+        |||  ${fardosGaseosaFanta.toFixed(0)}     "Fardos de Fanta naranja"
+        |||  ${fardosGaseosaMirindaM.toFixed(0)}  "Fardos de Mirinda manzana"
+        |||  ${fardosGaseosaPomelo.toFixed(0)}    "Fardos de Paso de los toros pomelo"
+        |||  ${pesoTotalGaseosa.toFixed(0)} "Kilos pesan en total las gaseosas."
+        `)
+        
+        console.log(`Se recomienda ${fardosGaseosaElegida.toFixed(0)} ${busqueda.marca} ${busqueda.sabor} de ${busqueda.medida} litros, los fardos de sprite son ${fardosGaseosaSprite.toFixed(0)}, los fardos de fanta son ${fardosGaseosaFanta.toFixed(0)}, los fardos de mirinda son ${fardosGaseosaMirindaM.toFixed(0)} y por ultimo los fardos de Paso de los toros pomelo son ${fardosGaseosaPomelo.toFixed(0)}`)
+
+                    salirMenu = true
+                }
+            }
+            buscarGaseosa(tiposDeGaseosas)
         break
       default:
          console.log("Opción no válida, ingrese alguna presente en el menu")
@@ -328,7 +358,7 @@ let opcionIngresada = parseInt(prompt(`lo recomendado para su evento en gaseosas
 let fardosCervezaImperial
 let fardosCervezaImperialGolden
 let fardosCervezaQuilmes
-
+salirMenu = false
 do{
 let opcionIngresada = parseInt(prompt(`
     Elija por favor ingresando la opcion numerica que desea (1, 2, 3) si desea elegir 2 variedades o mas de cervezas elija la opcion 4
@@ -337,7 +367,6 @@ let opcionIngresada = parseInt(prompt(`
     3 - Quilmes Clasica
     4 - elegir 2 o mas variedades de cerveza
     `))
-3
     switch(opcionIngresada){
         case 1:
         fardosCervezaImperial = (cervezas/cerveza1.litrosPorFardo)
@@ -346,7 +375,6 @@ let opcionIngresada = parseInt(prompt(`
         |||  ${fardosCervezaImperial.toFixed(0)}      Fardos de Cerveza Imperial Lager 473cc x 24  unidades.
         |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
         `)
-        
         console.log(`Se recomienda ${fardosCervezaImperial.toFixed(0)} fardos de cerveza Imperial Lager`)
         salirMenu = true
         break
@@ -357,7 +385,6 @@ let opcionIngresada = parseInt(prompt(`
           |||  ${fardosCervezaImperialGolden.toFixed(0)}      Fardos de Cerveza Imperial Golden 473cc x 24  unidades.
           |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
           `)
-          
           console.log(`Se recomienda ${fardosCervezaImperialGolden.toFixed(0)} fardos de cerveza Imperial Golden`)
           salirMenu = true
         break
@@ -368,7 +395,6 @@ let opcionIngresada = parseInt(prompt(`
           |||  ${fardosCervezaQuilmes.toFixed(0)}      Fardos de Cerveza Quilmes Clasica 473cc x 24  unidades.
           |||  ${pesoTotalCerveza.toFixed(0)} Kilos pesan en total las cervezas.
           `)
-          
           console.log(`Se recomienda ${fardosCervezaQuilmes.toFixed(0)} fardos de cerveza Quilmes Clasica`)
           salirMenu = true
         break
@@ -386,7 +412,7 @@ let opcionIngresada = parseInt(prompt(`
 //Menu que pregunte que fernet se va usar
 //genero la variable acumuladora para el unico fernet cargado.
 let cajasFernet
-
+salirMenu = false
 do{
 let opcionIngresada = parseInt(prompt(`
     Elija por favor ingresando la opcion numerica disponible (1)
@@ -400,9 +426,8 @@ let opcionIngresada = parseInt(prompt(`
         |||  ${cajasFernet.toFixed(0)}      Cajas de Fernet, las mismas traen 12 botellas por caja.
         |||  ${pesoTotalFernet.toFixed(0)} Kilos pesan en total las cajas de Fernet.
         `)
-        
-        console.log(`Se recomienda ${cajasFernet.toFixed(0)} cajas de Fernet 750ml`)
         salirMenu = true
+        console.log(`Se recomienda ${cajasFernet.toFixed(0)} cajas de Fernet 750ml`)
         break
       default:
          console.log("Opción no válida, ingrese alguna presente en el menu")
