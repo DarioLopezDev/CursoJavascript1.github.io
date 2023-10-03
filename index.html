@@ -1,20 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Iconos-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!--CSS-->
+    <link rel="stylesheet" href="./js/css/estilos.css">
     <title>Consulta de bebidas para un evento</title>
 </head>
-
 <body>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>.</H1>
-    <H1>CONSULTA POR TU BEBIDA PARA TU EVENTO</H1>
-    <script src="./js/proyectojavascript1.js"></script>
+    <header>
+<!--Menu Mis Bebidas-->  
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Mis Bebidas</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon "></span>
+                    </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto mx-1">
+                    <form class="d-flex mx-3">
+                    <input id="buscador"class="form-control me-2 " placeholder="Qué Bebida Buscas?" aria-label="Search">
+                    </form> 
+                    <button id="agregarBebida" data-bs-toggle="modal" data-bs-target="#idModalAgregarBebida" class="btn btn-secondary">Agregar bebida</button>
+                    <button id="btnToggle" class="btn btn-secondary mx-3">ModoOscuro</button>  
+                </ul>
+                <ul>
+                    <select id="selectOrden" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Ordenar por:</option>
+                        <option value="1">Mayor a menor</option>
+                        <option value="2">Menor a mayor</option>
+                        <option value="3">Alfabeticamente</option>
+                    </select>
+                </ul>
+                <ul style="list-style: none;"className="navbar-nav me-auto">  
+                    <li className="nav-item " >
+                        <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#idModalCarrito" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
+                    </li>
+                </ul>
+            </div>
+            </div> 
+        </nav>
+    </header>
+    <section>
+        <H1>CONSULTA POR TU BEBIDA PARA TU EVENTO</H1>
+<!--CONTAINER BEBIDAS-->
+        <div class="container">
+            <div id="bebidas" class="row"></div>
+        </div>
+<!--Formulario-->
+        <form id="formCargarBebida" class="my-4">
+            <div class="mb-3">
+                <label for="tipo" class="form-label">tipo</label>
+                <input type="text" class="form-control" id="tipoInput" aria-describedby="tipo">
+            </div>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca</label>
+                <input type="text" class="form-control" id="marcaInput" aria-describedby="marca">
+            </div>
+            <div class="mb-3">
+                <label for="sabor" class="form-label">Sabor</label>
+                <input type="text" class="form-control" id="saborInput" aria-describedby="sabor">
+            </div>
+            <div class="mb-3">
+                <label for="medida" class="form-label">Medida</label>
+                <input type="text" class="form-control" id="medidaInput" aria-describedby="medida">
+            </div>
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio:</label>
+                <input type="text" class="form-control" id="precioInput" aria-describedby="precio">
+            </div>
+        </form>
+        <button type="text" id="guardarBebidaBtn" class="btn btn-secondary" data-bs-dismiss="modal">Guardar Bebida</button>
+<!--Modals-->
+<!--Modal Agregar Bebida-->
+        <div class="modal fade" id="idModalAgregarBebida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Bebida</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="text" id="guardarBebidaBtn" class="btn btn-secondary" data-bs-dismiss="modal">Guardar Bebida</button>
+            </div>
+            </div>
+            </div>
+        </div>
+<!--Modal Carrito-->
+        <div class="modal fade" id="idModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-bodyCarrito">
+        </div>
+        <div class="row ml-ato">
+            <p id="precioTotal"></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
+        </div>
+        </div>
+        </div>
+        </div>
+<!--Script de Bootstrap-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+        </script>  
+    <!-- <script src="darkMode.js"></script> -->
+    <script src="./js/scripts/misBebidasDOM.js"></script>
+    </section>
+    <footer>
+    
+    </footer>
+    
+    <!--<script src="./js/proyectojavascript1.js"></script>-->
 </body>
 </html>
