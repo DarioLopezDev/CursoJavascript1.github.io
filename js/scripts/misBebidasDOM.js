@@ -193,9 +193,9 @@ const coeffernet = 0.045
 const coeffrio = 0.82
 const coefcalor = 1.18
 //variables que van a ser acumuladores de cada tipo en litros
-let acumGaseosa = Number
+/* let acumGaseosa = Number
 let acumCerveza = Number
-let acumFernet = Number
+let acumFernet = Number */
 
 // toma los datos del modal que se abre en la calculadora de bebidas.
 //let formCalcLitros = document.getElementById("formCalcLitros")
@@ -263,12 +263,7 @@ haceFrioOCalor()
     console.log(cantHoras.value)
     console.log(frioOCalor.value)
 
-    //indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
-    let frioCalorRetorno = 0
-if (frioCalorRetorno == coeffrio) {
-    frioCalorRetorno = "Frio"}
-    else if (frioCalorRetorno == coefcalor){
-    frioCalorRetorno = "Calor"}
+    
 
     let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
     console.log(arrayDatosIngresados)
@@ -281,15 +276,17 @@ botonCalcular.addEventListener("click", () =>{
     let acumGaseosa2 = 0
     let acumCerveza2 = 0
     let acumFernet2 = 0
+    let frioOCalor2
 
-    acumGaseosa2 = document.getElementById(acumGaseosa2)
-    acumCerveza2 = document.getElementById(acumCerveza2)
-    acumFernet2 = document.getElementById(acumFernet2)
+    acumGaseosa2 = document.getElementById("acumGaseosa2")
+    acumCerveza2 = document.getElementById("acumCerveza2")
+    acumFernet2 = document.getElementById("acumFernet2")
+    frioOCalor2 = document.getElementById("frioOCalor2")
 
     //calculos de bebida
-acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * frioOCalor.value + cantNinios.value * coefgaseosas * cantHoras.value * frioOCalor.value
-acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
-acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
+let acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * frioOCalor.value + cantNinios.value * coefgaseosas * cantHoras.value * frioOCalor.value
+let acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
+let acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
 
     console.log(cantAdultos.value)
     console.log(cantNinios.value)
@@ -301,11 +298,23 @@ acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
     console.log(acumCerveza)
     console.log(acumFernet)
 
-    getElementById(acumGaseosa2).innerText = acumGaseosa
-    acumCerveza2 = acumCerveza
-    acumFernet2 = acumFernet
-} )
+   
+//indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
+let frioCalorRetorno
+if (frioOCalor == coeffrio) {
+frioCalorRetorno = "Frio"}
+else if (frioOCalor == coefcalor){
+frioCalorRetorno = "Calor" } 
+
+    console.log(frioOCalor)
+    console.log(frioOCalor2)
+    console.log(frioCalorRetorno)
 
     let arrayLitrosCalculados = [acumGaseosa, acumCerveza, acumFernet, frioCalorRetorno]
     console.log(arrayLitrosCalculados)
-    
+
+    acumGaseosa2.value = acumGaseosa
+    acumCerveza2.value = acumCerveza
+    acumFernet2.value = acumFernet
+    frioOCalor2.value = frioCalorRetorno
+} )
