@@ -164,11 +164,11 @@ function agregarBebida(array){
     const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
     console.log(nuevaBebida)
     array.push(nuevaBebida) 
-    tipo.value =""
+   /*  tipo.value =""
     marca.value =""
     sabor.value =""
     medida.value =""
-    precio.value =""    
+    precio.value =""     */
     // formCargarBebida.reset() 
     //SETEAR STORAGE 
     sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
@@ -185,7 +185,81 @@ guardarBebidaBtn.addEventListener("click", () =>{
 //|||| ESTABLEZCO CONSTANTES Y FORMULAS PARA EL CALCULO  |||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+//coeficientes en litros por cada 1 hora de evento por cada persona.
+const coefgaseosas = 0.5
+const coefcerveza = 0.25
+const coeffernet = 0.045
+//coeficientes para disminuir o aumentar la cantidad por persona dependiendo del calor o frio
+const coeffrio = 0.82
+const coefcalor = 1.18
+//variables que van a ser acumuladores de cada tipo en litros
+let acumgaseosa = Number
+let acumcerveza = Number
+let acumfernet = Number
+
+// toma los datos del modal que se abre en la calculadora de bebidas.
+let formCalcLitros = document.getElementById("formCalcLitros")
+
+//defino las funciones y variables que tiene que completar el usuario
+//Funcion que determina la cantidad de los adultos del evento
+function cantidadAdultos() {
+    let adultos
+    do {
+        adultos = parseInt (prompt("Ingrese la cantidad de adultos que asistiran al evento"))
+    console.log (adultos)}
+    while (isNaN(adultos));
+    return (adultos)
+    }
+    //Funcion que determina la cantidad de ninios del evento
+    function cantidadNinios() {
+    let ninios
+    do {
+        ninios = parseInt (prompt("Ingrese la cantidad de niños que asistiran al evento"))
+    console.log (ninios)}
+    while (isNaN(ninios));
+    return (ninios)
+    }
+    //Funcion que determina la cantidad de horas que va a durar el evento
+    function duracionEvento() {
+    let duracionDelEvento
+    do {
+        duracionDelEvento = parseInt (prompt("Ingrese la Cantidad de horas que durara el evento"))
+    console.log (duracionDelEvento)}
+    while (isNaN(duracionDelEvento));
+    return (duracionDelEvento)
+    }
+    //Funcion que determina si habra calor o frio el dia del evento y dependiendo de eso, te entrega el valor del coeficiente de frio o calor segun corresponda
+    function consultafrioocalor() {
+    let frioCalor
+    do {
+    frioCalor = (prompt("Ingrese si es en una epoca de frio el numero 1, si es en una epoca de calor el numero 2"))
+    }
+    while (frioCalor != 1 && frioCalor != 2)
+    //si el usuario eligio frio convierte a la variable frioCalor al coeficiente de frio y si el usuario eligio calor a su respectivo coeficiente.
+    if (frioCalor == 1) {
+        frioCalor = coeffrio}
+    else if (frioCalor == 2){
+        frioCalor = coefcalor}
+    console.log (frioCalor)
+    return (frioCalor)
+    }
+    //Ejecuto las funciones, declaro y asigno variables para cada retorno.
+    let cantAdultos = cantidadAdultos();
+    let cantNinios = cantidadNinios();
+    let cantHoras = duracionEvento();
+    let frioCalor = consultafrioocalor();
 
 
+let arrayLitrosCalculados = function calculoLitros(array){
+    let cantAdultos = document.getElementById("cantAdultos")
+    let cantNinios = document.getElementById("cantNinios")
+    let cantHoras = document.getElementById("cantHoras")
+    let frioOCalor = document.getElementById("frioOCalor")
+    
+    console.log(arrayLitrosCalculados)
+    console.log(cantAdultos)
+    console.log(cantNinios)
+    console.log(cantHoras)
+    console.log(frioOCalor)
 
-
+}
