@@ -5,6 +5,9 @@
     border: 0;
     box-sizing: border-box;
 }
+#formularioModal{
+    display: flex;
+}
 .darkMode{
     color:white;
     background-color: black;
