@@ -186,16 +186,16 @@ guardarBebidaBtn.addEventListener("click", () =>{
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 //coeficientes en litros por cada 1 hora de evento por cada persona.
-const coefgaseosas = 0.5
+const coefgaseosas = 0.28
 const coefcerveza = 0.25
 const coeffernet = 0.045
 //coeficientes para disminuir o aumentar la cantidad por persona dependiendo del calor o frio
 const coeffrio = 0.82
 const coefcalor = 1.18
 //variables que van a ser acumuladores de cada tipo en litros
-let acumgaseosa = Number
-let acumcerveza = Number
-let acumfernet = Number
+let acumGaseosa = Number
+let acumCerveza = Number
+let acumFernet = Number
 
 // toma los datos del modal que se abre en la calculadora de bebidas.
 //let formCalcLitros = document.getElementById("formCalcLitros")
@@ -270,15 +270,36 @@ if (frioCalorRetorno == coeffrio) {
     else if (frioCalorRetorno == coefcalor){
     frioCalorRetorno = "Calor"}
 
-    let arrayLitrosCalculados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
+    let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
+    console.log(arrayDatosIngresados)
+    sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
+    
+    let botonCalcular = document.getElementById("botonCalcular")
+//adjuntar evento:
+botonCalcular.addEventListener("click", () =>{
+    // preventDefault()
+    let acumGaseosa2 = 0
+    let acumCerveza2 = 0
+    let acumFernet2 = 0
+
+    acumGaseosa2 = document.getElementById(acumGaseosa2)
+    acumCerveza2 = document.getElementById(acumCerveza2)
+    acumFernet2 = document.getElementById(acumFernet2)
+
+    //calculos de bebida
+acumGaseosa = (cantAdultos.value + cantNinios.value) * coefgaseosas * cantHoras.value * frioOCalor.value
+acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
+acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
+
+    console.log(acumGaseosa.toFixed(0))
+    console.log(acumCerveza.toFixed(0))
+    console.log(acumFernet.toFixed(0))
+
+    acumGaseosa2 = acumGaseosa
+    acumCerveza2 = acumCerveza
+    acumFernet2 = acumFernet
+} )
+
+    let arrayLitrosCalculados = [acumGaseosa, acumCerveza, acumFernet, frioCalorRetorno]
     console.log(arrayLitrosCalculados)
-
-//calculos de bebida
-acumgaseosa = (cantAdultos.value + cantNinios.value) * coefgaseosas * cantHoras.value * frioOCalor.value
-acumcerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
-acumfernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
-
-    console.log(acumgaseosa)
-    console.log(acumcerveza)
-    console.log(acumfernet)
-
+    
