@@ -1,5 +1,5 @@
 alert("Simulador de calculo de gaseosas, cerveza y fernet para un evento")
-//coeficientes en litros por cada 1 hora de evento
+//coeficientes en litros por cada 1 hora de evento por cada persona.
 const coefgaseosas = 0.5
 const coefcerveza = 0.25
 const coeffernet = 0.045

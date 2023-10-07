@@ -47,7 +47,7 @@ class Bebida{
 
     const gaseosa8 = new Bebida(8, "Gaseosa", "Coca Cola", "Cola", 0.375, 2300, "coca375.webp")
 
-    const cerveza1 = new Bebida(9, "Cerveza", "Imperial", "Lager", 0.473, 9500, "imperial.webp")
+    const cerveza1 = new Bebida(9, "Cerveza", "Imperial", "Lager", 0.473, 9500, "imperial473.webp")
     
     const cerveza2 = new Bebida(10, "Cerveza", "Imperial Golden", "Lager", 0.473, 9700, "golden473.webp")
     
@@ -91,12 +91,12 @@ console.log(tiposDeFernet.length)
 //si existe, hay info cargada
 
 let estanteria = []
-if(localStorage.getItem("estanteria")){
+if(sessionStorage.getItem("estanteria")){
     console.log("ya existe")
     
-    // estanteria = JSON.parse(localStorage.getItem("estanteria"))
+    // estanteria = JSON.parse(sessionStorage.getItem("estanteria"))
     //hacer for of de estanteria y pasarle new Bebida
-    for(let bebida of JSON.parse(localStorage.getItem("estanteria"))){
+    for(let bebida of JSON.parse(sessionStorage.getItem("estanteria"))){
         let bebidaStorage = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
         estanteria.push(bebidaStorage)
     }
@@ -107,7 +107,7 @@ if(localStorage.getItem("estanteria")){
     console.log("seteamos por primera vez")
     estanteria.push(gaseosa1, gaseosa2, gaseosa3, gaseosa4, gaseosa5, gaseosa6, gaseosa7, gaseosa8, cerveza1, cerveza2, cerveza3,fernet750)
     console.log(estanteria)
-    localStorage.setItem("estanteria", JSON.stringify(estanteria))
+    sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
 }
 
 function mostrarCatalogo(array){
@@ -129,8 +129,8 @@ function mostrarCatalogoDOM(array){
         let bebidaNuevaDiv= document.createElement("div")
         bebidaNuevaDiv.className = "col-12 col-md-6 col-lg-4 my-2"
         bebidaNuevaDiv.innerHTML = `
-            <div id="${bebida.id}" class="card" style="width: 18rem;">
-                    <img class="card-img-top img-fluid" style="height: 20%;"src="./js/assets/img/${bebida.imagen}" alt="${bebida.tipo} marca ${bebida.marca} sabor ${bebida.sabor} de ${bebida.medida} Litros  ">
+            <div id="${bebida.id}" class="card" style="width: 17rem;">
+                    <img class="card-img-top img-fluid" style="height: 17rem;"src="./js/assets/img/${bebida.imagen}" alt="${bebida.tipo} marca ${bebida.marca} sabor ${bebida.sabor} de ${bebida.medida} Litros  ">
                     <div class="card-body">
                         <h4 class="card-title"></h4>
                         <p>tipo: ${bebida.tipo}</p>
@@ -138,7 +138,7 @@ function mostrarCatalogoDOM(array){
                         <p>sabor: ${bebida.sabor}</p>
                         <p>medida: ${bebida.medida} L</p>
                         <p class="">Precio: ${bebida.precio}</p>
-                    <button id="" class="btn btn-outline-success">Agregar al carrito</button>
+                    <button id="" class="btn btn-outline-secondary">Agregar al carrito</button>
                     </div>
         </div> `
         containerBebidas.append(bebidaNuevaDiv)
@@ -171,7 +171,7 @@ function agregarBebida(array){
     precio.value =""    
     // formCargarBebida.reset() 
     //SETEAR STORAGE 
-    localStorage.setItem("estanteria", JSON.stringify(estanteria))
+    sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
 }
 let guardarBebidaBtn = document.getElementById("guardarBebidaBtn")
 //adjuntar evento:
@@ -181,3 +181,11 @@ guardarBebidaBtn.addEventListener("click", () =>{
     mostrarCatalogoDOM(estanteria)
 } )
 // agregarBebida(estanteria)
+//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//|||| ESTABLEZCO CONSTANTES Y FORMULAS PARA EL CALCULO  |||
+//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+
+

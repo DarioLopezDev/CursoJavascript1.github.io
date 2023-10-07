@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+
 * {
     margin: 0;
     border: 0;
@@ -9,4 +11,15 @@
 }
 .darkMode .card {
     color: black
+}
+
+.darkMode .card-body {
+    background-color: black
+}
+.darkMode .card-body p {
+    color: white;
+}
+.darkMode .modal-content{
+    color: white;
+    background-color: black;
 }

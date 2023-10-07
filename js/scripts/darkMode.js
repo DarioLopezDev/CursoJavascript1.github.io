@@ -1,15 +1,15 @@
 let btnToggle = document.getElementById("btnToggle")
 console.log(btnToggle)
-if(localStorage.getItem("modoOscuro")){
+if(sessionStorage.getItem("modoOscuro")){
     //si existe la calve en el storage
 
 }else{
     //no existe la clave en el storage
     console.log("SETEAMOS POR PRIMERA VEZ")
-    localStorage.setItem("modoOscuro", false)
+    sessionStorage.setItem("modoOscuro", false)
 }
 
-if(JSON.parse(localStorage.getItem("modoOscuro")) == true){
+if(JSON.parse(sessionStorage.getItem("modoOscuro")) == true){
     document.body.classList.toggle("darkMode")
     btnToggle.innerText = "Light"
 }
@@ -17,14 +17,14 @@ if(JSON.parse(localStorage.getItem("modoOscuro")) == true){
 //funcionamiento del botón
 btnToggle.addEventListener("click", () => {
     document.body.classList.toggle("darkMode")
-    if(JSON.parse(localStorage.getItem("modoOscuro")) == false){
+    if(JSON.parse(sessionStorage.getItem("modoOscuro")) == false){
         //ACA VOY A MODO OSCURO
-        btnToggle.innerText = "Light"
-        localStorage.setItem("modoOscuro", true)
+        btnToggle.innerText = "Modo Claro"
+        sessionStorage.setItem("modoOscuro", true)
     }
-    else if(JSON.parse(localStorage.getItem("modoOscuro")) == true){
+    else if(JSON.parse(sessionStorage.getItem("modoOscuro")) == true){
         //VOY A MODO CLARO
-        btnToggle.innerText = "Dark"
-        localStorage.setItem("modoOscuro", false)
+        btnToggle.innerText = "Modo Oscuro"
+        sessionStorage.setItem("modoOscuro", false)
     }
 })
