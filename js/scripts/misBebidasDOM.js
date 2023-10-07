@@ -186,7 +186,7 @@ guardarBebidaBtn.addEventListener("click", () =>{
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 //coeficientes en litros por cada 1 hora de evento por cada persona.
-const coefgaseosas = 0.28
+const coefgaseosas = 0.5
 const coefcerveza = 0.25
 const coeffernet = 0.045
 //coeficientes para disminuir o aumentar la cantidad por persona dependiendo del calor o frio
@@ -253,10 +253,10 @@ function haceFrioOCalor(){
     return (frioOCalor.value)
     }
 //ejecuto las funciones 
-cantidadAdultos(15)
-cantidadNinios(20)
-cantidadHoras(5)
-haceFrioOCalor(2)
+cantidadAdultos()
+cantidadNinios()
+cantidadHoras()
+haceFrioOCalor()
 
     console.log(cantAdultos.value)
     console.log(cantNinios.value)
@@ -287,15 +287,21 @@ botonCalcular.addEventListener("click", () =>{
     acumFernet2 = document.getElementById(acumFernet2)
 
     //calculos de bebida
-acumGaseosa = (cantAdultos.value + cantNinios.value) * coefgaseosas * cantHoras.value * frioOCalor.value
+acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * frioOCalor.value + cantNinios.value * coefgaseosas * cantHoras.value * frioOCalor.value
 acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
 acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
 
-    console.log(acumGaseosa.toFixed(0))
-    console.log(acumCerveza.toFixed(0))
-    console.log(acumFernet.toFixed(0))
+    console.log(cantAdultos.value)
+    console.log(cantNinios.value)
+    console.log(cantHoras.value)
+    console.log(frioOCalor.value)
+    console.log(coefgaseosas)
 
-    acumGaseosa2 = acumGaseosa
+    console.log(acumGaseosa)
+    console.log(acumCerveza)
+    console.log(acumFernet)
+
+    getElementById(acumGaseosa2).innerText = acumGaseosa
     acumCerveza2 = acumCerveza
     acumFernet2 = acumFernet
 } )
