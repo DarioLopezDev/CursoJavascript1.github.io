@@ -277,44 +277,49 @@ botonCalcular.addEventListener("click", () =>{
     let acumCerveza2 = 0
     let acumFernet2 = 0
     let frioOCalor2
+    let calorOFrio
 
     acumGaseosa2 = document.getElementById("acumGaseosa2")
     acumCerveza2 = document.getElementById("acumCerveza2")
     acumFernet2 = document.getElementById("acumFernet2")
     frioOCalor2 = document.getElementById("frioOCalor2")
-
+    if (frioOCalor.value == 1) {
+        calorOFrio = coeffrio }
+        else if (frioOCalor.value == 2){
+        calorOFrio = coefcalor } 
+    console.log(frioOCalor)
     //calculos de bebida
-let acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * frioOCalor.value + cantNinios.value * coefgaseosas * cantHoras.value * frioOCalor.value
-let acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * frioOCalor.value
-let acumFernet = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
+let acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * calorOFrio + cantNinios.value * coefgaseosas * cantHoras.value * calorOFrio
+let acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * calorOFrio
+let acumFernet = cantAdultos.value * coeffernet * cantHoras.value * calorOFrio
 
     console.log(cantAdultos.value)
     console.log(cantNinios.value)
     console.log(cantHoras.value)
-    console.log(frioOCalor.value)
+    console.log(calorOFrio.value)
     console.log(coefgaseosas)
 
     console.log(acumGaseosa)
     console.log(acumCerveza)
     console.log(acumFernet)
 
-   
+
 //indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
 let frioCalorRetorno
-if (frioOCalor == coeffrio) {
+if (frioOCalor.value == 1) {
 frioCalorRetorno = "Frio"}
-else if (frioOCalor == coefcalor){
+else if (frioOCalor.value == 2){
 frioCalorRetorno = "Calor" } 
 
-    console.log(frioOCalor)
+    console.log(frioOCalor.value)
     console.log(frioOCalor2)
     console.log(frioCalorRetorno)
 
     let arrayLitrosCalculados = [acumGaseosa, acumCerveza, acumFernet, frioCalorRetorno]
     console.log(arrayLitrosCalculados)
 
-    acumGaseosa2.value = acumGaseosa
-    acumCerveza2.value = acumCerveza
-    acumFernet2.value = acumFernet
+    acumGaseosa2.value = acumGaseosa.toFixed(0)
+    acumCerveza2.value = acumCerveza.toFixed(0)
+    acumFernet2.value = acumFernet.toFixed(0)
     frioOCalor2.value = frioCalorRetorno
 } )
