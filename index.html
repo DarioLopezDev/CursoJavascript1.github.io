@@ -29,30 +29,28 @@
                     <button id="agregarBebida" data-bs-toggle="modal" data-bs-target="#idModalAgregarBebida" class="btn btn-secondary">Agregar bebida</button>
                     <button id="btnToggle" class="btn btn-secondary mx-3">ModoOscuro</button>  
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal_container">
-    Calcular Bebidas
-    </button>
-  
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal_container">Calcular Bebidas</button>
+
     <!-- Modal -->
-  <div class="modal fade" id="modal_container" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_container" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+        <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modal_container">Calculadora de Bebidas</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h1 class="modal-title fs-5" id="modal_container">Calculadora de Bebidas</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body ">
             <div id="formularioModal" class="container-fluid">
                 <form id="formCalcLitros">
                     <div class="col-7">
                         <label for="cantAdultos">Cantidad de Adultos que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantAdultos" placeholder="Ej: 88, 22, 400, 100" value="0">
+                        <input type="number" class="form-control" id="cantAdultos" placeholder="Ej: 88, 22, 400, 100" value="">
                         <label for="cantNinios">Cantidad de Niños que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantNinios" placeholder="Ej: 24, 56, 77, 234" value="0">
+                        <input type="number" class="form-control" id="cantNinios" placeholder="Ej: 24, 56, 77, 234" value="">
                         <label for="cantHoras">Cantidad de Horas que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantHoras" placeholder="Ej: 1, 2, 5, 10" value="0">
+                        <input type="number" class="form-control" id="cantHoras" placeholder="Ej: 1, 2, 5, 10" value="">
                         <label for="frioOCalor">Sera un dia de Frio (ingrese 1) o de Calor (ingrese 2)</label>
-                        <input type="number" class="form-control" id="frioOCalor" placeholder="Ej: 1= Frio ; 2= Calor" value="0">
+                        <input type="number" class="form-control" id="frioOCalor" placeholder="1=Frio 2=Calor" value="">
                     </div>
                 </form>
                 <form id="formCalcLitros2"></form>
@@ -70,12 +68,13 @@
         </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" id="botonCalcular" class="btn btn-success">Calcular</button>
+            <button type="button" id="limpiarCalculadoraBtn" class="btn btn-secondary">Limpiar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" id="botonCalcular" class="btn btn-success">Calcular</button>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+    </div>
                 </ul>
                 <ul>
                     <select id="selectOrden" class="form-select form-select-sm" aria-label=".form-select-sm example">

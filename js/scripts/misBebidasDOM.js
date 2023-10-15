@@ -247,8 +247,8 @@ function haceFrioOCalor(){
         //si el usuario eligio frio convierte a la variable frioCalor al coeficiente de frio y si el usuario eligio calor a su respectivo coeficiente.
     if (frioOCalor == 1) {
         frioOCalor = coeffrio}
-    else if (frioOCalor == 2){
-        frioOCalor = coefcalor}
+    else if (frioOCalor == 2) {
+        frioOCalor = coefcalor} 
     console.log (frioOCalor)
     return (frioOCalor.value)
     }
@@ -323,3 +323,18 @@ frioCalorRetorno = "Calor" }
     acumFernet2.value = acumFernet.toFixed(0)
     frioOCalor2.value = frioCalorRetorno
 } )
+
+function limpiarCalc() {
+    cantAdultos.value = ""
+    cantNinios.value = ""
+    cantHoras.value = ""
+    frioOCalor.value = ""
+    acumGaseosa2.value = ""
+    acumCerveza2.value = ""
+    acumFernet2.value = ""
+    frioOCalor2.value = ""
+}
+limpiarCalculadoraBtn.addEventListener("click", () => {
+    // preventDefault()
+    limpiarCalc()
+})
