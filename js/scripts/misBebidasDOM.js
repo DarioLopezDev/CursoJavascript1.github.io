@@ -56,6 +56,7 @@ class Bebida{
     const fernet750 = new Bebida(12, "Fernet", "Branca", "Clasico", 0.750, 36000, "fernet750.webp")
 
 //creo una variable que sera el array de las gaseosas.
+//la exporto para usarla en controlador de Fardos.js
 export const tiposDeGaseosas = []
 //hago push dentro del array con todos los objetos gaseosas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las gaseosas incluso las que agreguen despues
@@ -64,7 +65,8 @@ tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gase
 console.log(tiposDeGaseosas.length)
 
 //creo una variable que sera el array de las cervezas.
-/* export */ const tiposDeCervezas = []
+//la exporto para usarla en controlador de Fardos.js
+export const tiposDeCervezas = []
 //hago push dentro del array con todos los objetos cervezas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las cervezas incluso las que agreguen despues
 tiposDeCervezas.push (cerveza1, cerveza2, cerveza3)
@@ -72,7 +74,8 @@ tiposDeCervezas.push (cerveza1, cerveza2, cerveza3)
 console.log(tiposDeCervezas.length)
 
 //creo una variable que sera el array del fernet.
-/* export */ const tiposDeFernet = []
+//la exporto para usarla en controlador de Fardos.js
+export const tiposDeFernet = []
 //hago push dentro del array con todos los objetos fernet
 //aqui tengo que mejorar con un for o algo asi para que se carguen todos los fernet incluso los que agreguen despues
 tiposDeFernet.push (fernet750)
@@ -338,8 +341,8 @@ limpiarCalculadoraBtn.addEventListener("click", () => {
     // preventDefault()
     limpiarCalc()
 })
-let cargarDatos = (obj,id)=>{
-    let selector = document.getElementById (id)
+let cargarDatos = (obj,clase)=>{
+    let selector = document.querySelector (`.${clase}`)
     for (let i = 0; i < obj.length; i++) {
         let optionGaseosa = document.createElement("option")
         optionGaseosa.value = i+1

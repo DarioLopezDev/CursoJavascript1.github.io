@@ -85,16 +85,19 @@
             <div class="modal-body ">
                 <div id="contenedorCalculadora" class="container-fluid row">
                     <h3>GASEOSA</h3>
-                        <div class = "col-4">
-                            <label for="porcentajeGaseosa1">0% al 100%</label>
-                            <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
+                    <div id="contenedorGeneralGaseosa" class="container-fluid col-12">
+                    <div class="container-fluid row">
+                        <div id="inputPorcentajeGaseosa" class = "col-4">
+                            <label for="porcentajeGaseosa">0% al 100%</label>
+                            <input type="number" class="form-control" id="inputGaseosa0" placeholder="Ej: 11, 22, 50, 100" value="">
                         </div>
-                        <div id = "pepe"class = "col-8"><br>
-                            <select id= "gaseosaDefault"class="form-select" aria-label="Default select example">
-                            
-                                </select>
+                        <div id = "selectGaseosa"class = "col-8"><br>
+                            <select id= "selectGaseosa0"class="form-select gaseosaDefault" aria-label="Default select example">
+                            </select>
                                 <br>
-                        </div> 
+                        </div>
+                    </div>
+                    </div>
                         <div class="col-4"></div>
                         <button type="button" id="botonAgregarTipoGaseosa" class="btn btn-success col-4">Agregar otro tipo de Fardo</button>       
                         <h3>CERVEZA</h3>
@@ -103,11 +106,7 @@
                             <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
                         </div>
                         <div class = "col-8"><br>
-                            <select id= "cervezaDefault"class="form-select" aria-label="Default select example">
-                                <option selected>Elegi tu Cerveza</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select id= "cervezaDefault"class="form-select cervezaDefault" aria-label="Default select example">
                                 </select>
                                 <br>
                         </div> 
@@ -265,7 +264,7 @@
         </script>  
     <script src="./js/scripts/darkMode.js"></script>
     <script src="./js/scripts/misBebidasDOM.js" type="module"></script>
-    <script src="./js/scripts/controladorDeFardos.js" type="module"> </script>
+    <script src="./js/scripts/controladorDeGaseosas.js" type="module"> </script>
     </section>
     <footer>
     
