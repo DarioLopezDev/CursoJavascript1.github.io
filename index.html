@@ -29,52 +29,152 @@
                     <button id="agregarBebida" data-bs-toggle="modal" data-bs-target="#idModalAgregarBebida" class="btn btn-secondary">Agregar bebida</button>
                     <button id="btnToggle" class="btn btn-secondary mx-3">ModoOscuro</button>  
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal_container">Calcular Bebidas</button>
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Calcular Bebidas</button>
+<!-- MODAL DE CALCULADORA DE BEBIDAS-->
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Calculadora de Bebidas</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="formularioModal" class="container-fluid">
+                    <form id="formCalcLitros">
+                        <div class="col-7">
+                            <label for="cantAdultos">Cantidad de Adultos que asisten al evento</label>
+                            <input type="number" class="form-control" id="cantAdultos" placeholder="Ej: 88, 22, 400, 100" value="">
+                            <label for="cantNinios">Cantidad de Niños que asisten al evento</label>
+                            <input type="number" class="form-control" id="cantNinios" placeholder="Ej: 24, 56, 77, 234" value="">
+                            <label for="cantHoras">Cantidad de Horas que asisten al evento</label>
+                            <input type="number" class="form-control" id="cantHoras" placeholder="Ej: 1, 2, 5, 10" value="">
+                            <label for="frioOCalor">Sera un dia de Frio (ingrese 1) o de Calor (ingrese 2)</label>
+                            <input type="number" class="form-control" id="frioOCalor" placeholder="1=Frio 2=Calor" value="">
+                        </div>
+                    </form>
+                    <form id="formCalcLitros2"></form>
+                        <div class="col-5">
+                                <label for="acumGaseosa2">Cantidad Gaseosa en Litros</label>
+                                <input type="text" class="form-label" id="acumGaseosa2"  value="">
+                                <label for="acumCerveza2">Cantidad Cerveza en Litros</label>
+                                <input type="text" class="form-label" id="acumCerveza2"  value="">
+                                <label for="acumFernet2">Cantidad Fernet en Litros</label>
+                                <input type="text" class="form-label" id="acumFernet2"  value="">
+                                <label for="frioOCalor2">Sera un dia de:</label>
+                                <input type="text" class="form-label" id="frioOCalor2"  value="">
+                        </div>
+                    </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Calculadora Fardos</button>
+              <button type="button" id="limpiarCalculadoraBtn" class="btn btn-secondary">Limpiar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" id="botonCalcular" class="btn btn-success">Calcular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade modal-lg" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Calculadora de Fardos</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div id="contenedorCalculadora" class="container-fluid row">
+                    <h3>GASEOSA</h3>
+                        <div class = "col-4">
+                            <label for="porcentajeGaseosa1">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
+                        </div>
+                        <div class = "col-8"><br>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Elegi tu Gaseosa</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+                                <br>
+                        </div> 
+                        <div class="col-4"></div>
+                        <button type="button" id="botonAgregarTipoGaseosa" class="btn btn-success col-4">Agregar otro tipo de Fardo</button>       
+                        <h3>CERVEZA</h3>
+                        <div class = "col-4">
+                            <label for="porcentajeGaseosa1">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
+                        </div>
+                        <div class = "col-8"><br>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Elegi tu Cerveza</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+                                <br>
+                        </div> 
+                        <div class="col-4"></div>
+                        <button type="button" id="botonAgregarTipoCerveza" class="btn btn-success col-4">Agregar otro tipo de Fardo</button> 
+                        <h3>FERNET</h3>
+                        <div class = "col-4">
+                            <label for="porcentajeGaseosa1">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
+                        </div>
+                        <div class = "col-8"><br>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Elegi tu Fernet</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+                                <br>
+                        </div> 
+                        <div class="col-4"></div>
+                        <button type="button" id="botonAgregarTipoFernet" class="btn btn-success col-4">Agregar otro tipo de Fardo</button> 
+                        <!--     <label for="porcentajeGaseosa2">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa2" placeholder="Ej: 24, 56, 77, 88" value="">
+                            <label for="porcentajeGaseosa3">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa3" placeholder="Ej: 1, 2, 5, 10" value="">
+                            <label for="porcentajeGaseosa4">0% al 100%</label>
+                            <input type="number" class="form-control" id="porcentajeGaseosa4" placeholder="Ej: 10, 20, 50, 75" value="">
+                        <div >
+                           
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal_container" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modal_container">Calculadora de Bebidas</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <select class="form-select col-6" aria-label="Default select example">
+                                <option selected>Elegi tu Gaseosa</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                </select>
+
+                                <select class="form-select col-6" aria-label="Default select example">
+                                    <option selected>Elegi tu Gaseosa</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                    </select>
+
+                                    <select class="form-select col-6" aria-label="Default select example">
+                                        <option selected>Elegi tu Gaseosa</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                        </select>
+                        </div>
+                    
+                    <form class="row">
+                        
+                    </form>  -->
+                 </div>
+            </div> 
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Volver Atras</button>
+            </div>
+          </div>
         </div>
-        <div class="modal-body ">
-            <div id="formularioModal" class="container-fluid">
-                <form id="formCalcLitros">
-                    <div class="col-7">
-                        <label for="cantAdultos">Cantidad de Adultos que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantAdultos" placeholder="Ej: 88, 22, 400, 100" value="">
-                        <label for="cantNinios">Cantidad de Niños que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantNinios" placeholder="Ej: 24, 56, 77, 234" value="">
-                        <label for="cantHoras">Cantidad de Horas que asisten al evento</label>
-                        <input type="number" class="form-control" id="cantHoras" placeholder="Ej: 1, 2, 5, 10" value="">
-                        <label for="frioOCalor">Sera un dia de Frio (ingrese 1) o de Calor (ingrese 2)</label>
-                        <input type="number" class="form-control" id="frioOCalor" placeholder="1=Frio 2=Calor" value="">
-                    </div>
-                </form>
-                <form id="formCalcLitros2"></form>
-                    <div class="col-5">
-                            <label for="acumGaseosa2">Cantidad Gaseosa en Litros</label>
-                            <input type="text" class="form-label" id="acumGaseosa2"  value="">
-                            <label for="acumCerveza2">Cantidad Cerveza en Litros</label>
-                            <input type="text" class="form-label" id="acumCerveza2"  value="">
-                            <label for="acumFernet2">Cantidad Fernet en Litros</label>
-                            <input type="text" class="form-label" id="acumFernet2"  value="">
-                            <label for="frioOCalor2">Sera un dia de:</label>
-                            <input type="text" class="form-label" id="frioOCalor2"  value="">
-                    </div>
-                </form>
-        </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="limpiarCalculadoraBtn" class="btn btn-secondary">Limpiar</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" id="botonCalcular" class="btn btn-success">Calcular</button>
-        </div>
-        </div>
-    </div>
-    </div>
+      </div>
+
                 </ul>
                 <ul>
                     <select id="selectOrden" class="form-select form-select-sm" aria-label=".form-select-sm example">
