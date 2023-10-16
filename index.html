@@ -89,12 +89,9 @@
                             <label for="porcentajeGaseosa1">0% al 100%</label>
                             <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
                         </div>
-                        <div class = "col-8"><br>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Elegi tu Gaseosa</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                        <div id = "pepe"class = "col-8"><br>
+                            <select id= "gaseosaDefault"class="form-select" aria-label="Default select example">
+                            
                                 </select>
                                 <br>
                         </div> 
@@ -106,7 +103,7 @@
                             <input type="number" class="form-control" id="porcentajeGaseosa1" placeholder="Ej: 11, 22, 50, 100" value="">
                         </div>
                         <div class = "col-8"><br>
-                            <select class="form-select" aria-label="Default select example">
+                            <select id= "cervezaDefault"class="form-select" aria-label="Default select example">
                                 <option selected>Elegi tu Cerveza</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -267,7 +264,8 @@
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
         </script>  
     <script src="./js/scripts/darkMode.js"></script>
-    <script src="./js/scripts/misBebidasDOM.js"></script>
+    <script src="./js/scripts/misBebidasDOM.js" type="module"></script>
+    <script src="./js/scripts/controladorDeFardos.js" type="module"> </script>
     </section>
     <footer>
     
