@@ -73,3 +73,4 @@ botonAgregarTipoGaseosa.addEventListener ("click", () => {console.log("estoyaqui
     contenedorGeneralGaseosa.appendChild (contenedorAgregado2)  
     contadorId++
 })
+
