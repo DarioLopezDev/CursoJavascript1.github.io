@@ -354,3 +354,4 @@ let cargarDatos = (obj,clase)=>{
 }
 cargarDatos(tiposDeGaseosas,"gaseosaDefault")
 cargarDatos(tiposDeCervezas,"cervezaDefault")
+cargarDatos(tiposDeFernet,"fernetDefault")
