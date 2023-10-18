@@ -1,5 +1,7 @@
 import {tiposDeGaseosas} from "./misBebidasDOM.js"; 
 
+export let nroInputsGaseosa =[0]
+
 const inputGaseosa = (obj) => {
     let gaseosaContainer = document.createElement("div")
     console.log (gaseosaContainer)
@@ -71,6 +73,6 @@ botonAgregarTipoGaseosa.addEventListener ("click", () => {console.log("estoyaqui
     let contenedorSelect = contenedorAgregado2.querySelector("select")
     contenedorSelect.id = `selectGaseosa${contadorId}`
     contenedorGeneralGaseosa.appendChild (contenedorAgregado2)  
-    contadorId++
+    contadorId++ 
+    nroInputsGaseosa.push(0)
 })
-

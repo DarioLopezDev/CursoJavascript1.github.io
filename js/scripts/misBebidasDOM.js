@@ -1,3 +1,7 @@
+import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
+//se utiliza en linea 389
+let litrosPorFardoDeGaseosa = {}
+//
 class Bebida{
     constructor(id, tipo, marca, sabor, medida, precio, imagen){
 //atributos-propiedades
@@ -173,8 +177,20 @@ function agregarBebida(array){
     medida.value =""
     precio.value =""     
     // formCargarBebida.reset() 
+    Swal.fire ({
+        title: `Excelente has agregado un tipo de Bebida`,
+        text: `La Bebida ${nuevaBebida.marca} sabor ${nuevaBebida.sabor} de ${nuevaBebida.medida} L se ha sumado.`,
+        imageUrl: `./js/assets/img/${nuevaBebida.imagen}`,
+        imageHeight: 350,
+        imageAlt: `${nuevaBebida.marca} sabor ${nuevaBebida.sabor} de ${nuevaBebida.medida}`,
+        showConfirmButton: false,
+        timer: 5500
+    })
     //SETEAR STORAGE 
     sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
+    //hacer con toastify una notificacion
+    
+
 }
 let guardarBebidaBtn = document.getElementById("guardarBebidaBtn")
 //adjuntar evento:
@@ -271,21 +287,24 @@ haceFrioOCalor()
     let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
     console.log(arrayDatosIngresados)
     sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
-    
-    let botonCalcular = document.getElementById("botonCalcular")
-//adjuntar evento:
-botonCalcular.addEventListener("click", () =>{
-    // preventDefault()
-    let acumGaseosa2 = 0
-    let acumCerveza2 = 0
-    let acumFernet2 = 0
-    let frioOCalor2
+
+    //declaro las variables fuera de la funcion para que no queden atrapadas en el scope
+    let acumGaseosa20 = 0
+    let acumCerveza20 = 0
+    let acumFernet20 = 0
+    let frioOCalor20 = ""
     let calorOFrio
 
-    acumGaseosa2 = document.getElementById("acumGaseosa2")
-    acumCerveza2 = document.getElementById("acumCerveza2")
-    acumFernet2 = document.getElementById("acumFernet2")
-    frioOCalor2 = document.getElementById("frioOCalor2")
+    let botonCalcular = document.getElementById("botonCalcular")
+//adjuntar evento:
+    botonCalcular.addEventListener("click", () =>{
+    // preventDefault()
+    
+
+    let acumGaseosa2 = document.getElementById("acumGaseosa2")
+    let acumCerveza2 = document.getElementById("acumCerveza2")
+    let acumFernet2 = document.getElementById("acumFernet2")
+    let frioOCalor2 = document.getElementById("frioOCalor2")
     if (frioOCalor.value == 1) {
         calorOFrio = coeffrio }
         else if (frioOCalor.value == 2){
@@ -325,7 +344,13 @@ frioCalorRetorno = "Calor" }
     acumCerveza2.value = acumCerveza.toFixed(0)
     acumFernet2.value = acumFernet.toFixed(0)
     frioOCalor2.value = frioCalorRetorno
-} )
+
+    acumGaseosa20 = acumGaseosa2.value 
+    acumCerveza20 = acumCerveza2.value
+    acumFernet20 = acumFernet2.value
+    frioOCalor20 = frioOCalor2.value
+
+})
 
 function limpiarCalc() {
     cantAdultos.value = ""
@@ -355,3 +380,29 @@ let cargarDatos = (obj,clase)=>{
 cargarDatos(tiposDeGaseosas,"gaseosaDefault")
 cargarDatos(tiposDeCervezas,"cervezaDefault")
 cargarDatos(tiposDeFernet,"fernetDefault")
+
+///////////////////////////////////////
+//////                          ///////
+//////  CALCULADORA DE FARDOS   ///////
+//////                          ///////
+///////////////////////////////////////
+
+for (let i = 0; i < tiposDeGaseosas.length; i++) {
+    let labelGaseosa = `${tiposDeGaseosas[i].marca} ${tiposDeGaseosas[i].sabor} ${tiposDeGaseosas[i].medida} L`
+    let litrosPorFardo = tiposDeGaseosas[i].medida* tiposDeGaseosas[i].unidadesPorBulto()
+    litrosPorFardoDeGaseosa[labelGaseosa] = litrosPorFardo
+    ;
+    
+}
+let botonCalcularFardos = document.getElementById("botonCalcularFardos")
+//adjuntar evento:
+    botonCalcularFardos.addEventListener("click", () =>{
+        for (let i = 0; i < nroInputsGaseosa.length; i++) {
+        let inputNro = document.getElementById(`inputGaseosa${i}`).value
+        let selectNro =document.getElementById (`selectGaseosa${i}`)
+        let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+        let litrosPorFardoNro = litrosPorFardoDeGaseosa[optionText]
+        console.log (litrosPorFardoNro)
+        }
+        console.log(acumGaseosa20)
+    })
