@@ -427,7 +427,8 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
         let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
         
         let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
-        let muestraResultadoG = document.createElement("p");
+        let muestraResultadoG = document.createElement("p")
+        muestraResultadoG.className ="text-bg-dark text-center";
         muestraResultadoG.textContent = muestraDeDatosFinal;
         sectorMuestraDeCalculo.appendChild(muestraResultadoG);
 
@@ -444,6 +445,7 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
             
             let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
             let muestraResultadoC = document.createElement("p");
+            muestraResultadoC.className ="text-bg-dark text-center"
             muestraResultadoC.textContent = muestraDeDatosFinal;
             sectorMuestraDeCalculo.appendChild(muestraResultadoC);
     
@@ -460,6 +462,7 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
                 
                 let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
                 let muestraResultadoF = document.createElement("p");
+                muestraResultadoF.className ="text-bg-dark text-center"
                 muestraResultadoF.textContent = muestraDeDatosFinal;
                 sectorMuestraDeCalculo.appendChild(muestraResultadoF);
         
