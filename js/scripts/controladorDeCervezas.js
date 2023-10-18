@@ -1,5 +1,7 @@
 import {tiposDeCervezas} from "./misBebidasDOM.js"; 
 
+export let nroInputsCerveza =[0]
+
 const inputCerveza = (obj) => {
     let cervezaContainer = document.createElement("div")
     console.log (cervezaContainer)
@@ -72,4 +74,5 @@ botonAgregarTipoCerveza.addEventListener ("click", () => {console.log("estoyaqui
     contenedorSelect.id = `selectCerveza${contadorId}`
     contenedorGeneralCerveza.appendChild (contenedorAgregado2)  
     contadorId++
+    nroInputsCerveza.push(0)
 })

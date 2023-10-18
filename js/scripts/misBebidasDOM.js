@@ -1,6 +1,10 @@
 import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
+import {nroInputsCerveza} from "./controladorDeCervezas.js"
+import {nroInputsFernet} from "./controladorDeFernet.js"
 //se utiliza en linea 389
 let litrosPorFardoDeGaseosa = {}
+let litrosPorFardoDeCerveza = {}
+let litrosPorFardoDeFernet = {}
 //
 class Bebida{
     constructor(id, tipo, marca, sabor, medida, precio, imagen){
@@ -22,7 +26,9 @@ class Bebida{
         else if (this.medida == 2.25) {return 8}
         else if (this.medida == 1.75) {return 8}
         else if (this.medida == 1.5) {return 6}
+        else if (this.medida == 0.75) {return 12} //fernet
         else if (this.medida == 0.5) {return 12}
+        else if (this.medida == 0.473) {return 24} //latasDeCervezas
         else if (this.medida == 0.375) {return 12}
         else return "la medida no esta cargada en la base de datos comuniquese con su programador de confianza"
     }
@@ -299,8 +305,6 @@ haceFrioOCalor()
 //adjuntar evento:
     botonCalcular.addEventListener("click", () =>{
     // preventDefault()
-    
-
     let acumGaseosa2 = document.getElementById("acumGaseosa2")
     let acumCerveza2 = document.getElementById("acumCerveza2")
     let acumFernet2 = document.getElementById("acumFernet2")
@@ -394,15 +398,73 @@ for (let i = 0; i < tiposDeGaseosas.length; i++) {
     ;
     
 }
+
+for (let i = 0; i < tiposDeCervezas.length; i++) {
+    let labelCerveza = `${tiposDeCervezas[i].marca} ${tiposDeCervezas[i].sabor} ${tiposDeCervezas[i].medida} L`
+    let litrosPorFardo = tiposDeCervezas[i].medida* tiposDeCervezas[i].unidadesPorBulto()
+    litrosPorFardoDeCerveza[labelCerveza] = litrosPorFardo
+    ;
+    
+}
+
+for (let i = 0; i < tiposDeFernet.length; i++) {
+    let labelFernet = `${tiposDeFernet[i].marca} ${tiposDeFernet[i].sabor} ${tiposDeFernet[i].medida} L`
+    let litrosPorFardo = tiposDeFernet[i].medida* tiposDeFernet[i].unidadesPorBulto()
+    litrosPorFardoDeFernet[labelFernet] = litrosPorFardo
+    ;
+    
+}
 let botonCalcularFardos = document.getElementById("botonCalcularFardos")
 //adjuntar evento:
     botonCalcularFardos.addEventListener("click", () =>{
+        sectorMuestraDeCalculo.innerHTML = "";
         for (let i = 0; i < nroInputsGaseosa.length; i++) {
         let inputNro = document.getElementById(`inputGaseosa${i}`).value
-        let selectNro =document.getElementById (`selectGaseosa${i}`)
+        let selectNro = document.getElementById (`selectGaseosa${i}`)
         let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
         let litrosPorFardoNro = litrosPorFardoDeGaseosa[optionText]
-        console.log (litrosPorFardoNro)
+        let muestraDeDatos = (acumGaseosa20*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
+        
+        let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
+        let muestraResultadoG = document.createElement("p");
+        muestraResultadoG.textContent = muestraDeDatosFinal;
+        sectorMuestraDeCalculo.appendChild(muestraResultadoG);
+
+        console.log (muestraDeDatosFinal)
         }
+        
+        for (let i = 0; i < nroInputsCerveza.length; i++) {
+            let inputNro = document.getElementById(`inputCerveza${i}`).value
+            let selectNro =document.getElementById (`selectCerveza${i}`)
+            let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+            let litrosPorFardoNro = litrosPorFardoDeCerveza[optionText]
+            let muestraDeDatos = (acumCerveza20*inputNro/100)/litrosPorFardoNro
+            let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
+            
+            let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
+            let muestraResultadoC = document.createElement("p");
+            muestraResultadoC.textContent = muestraDeDatosFinal;
+            sectorMuestraDeCalculo.appendChild(muestraResultadoC);
+    
+            console.log (muestraDeDatosFinal)
+            }
+
+            for (let i = 0; i < nroInputsFernet.length; i++) {
+                let inputNro = document.getElementById(`inputFernet${i}`).value
+                let selectNro =document.getElementById (`selectFernet${i}`)
+                let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+                let litrosPorFardoNro = litrosPorFardoDeFernet[optionText]
+                let muestraDeDatos = (acumFernet20*inputNro/100)/litrosPorFardoNro
+                let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
+                
+                let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
+                let muestraResultadoF = document.createElement("p");
+                muestraResultadoF.textContent = muestraDeDatosFinal;
+                sectorMuestraDeCalculo.appendChild(muestraResultadoF);
+        
+                console.log (muestraDeDatosFinal)
+                }
+
         console.log(acumGaseosa20)
     })

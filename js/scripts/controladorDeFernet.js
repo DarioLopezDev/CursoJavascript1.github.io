@@ -1,5 +1,7 @@
 import {tiposDeFernet} from "./misBebidasDOM.js"; 
 
+export let nroInputsFernet =[0]
+
 const inputFernet = (obj) => {
     let fernetContainer = document.createElement("div")
     console.log (fernetContainer)
@@ -72,4 +74,5 @@ botonAgregarTipoFernet.addEventListener ("click", () => {console.log("estoyaqui"
     contenedorSelect.id = `selectFernet${contadorId}`
     contenedorGeneralFernet.appendChild (contenedorAgregado2)  
     contadorId++
+    nroInputsFernet.push(0)
 })
