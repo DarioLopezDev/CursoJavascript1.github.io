@@ -6,6 +6,9 @@ let litrosPorFardoDeGaseosa = {}
 let litrosPorFardoDeCerveza = {}
 let litrosPorFardoDeFernet = {}
 //
+let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
+console.log(productosCarrito)
+
 class Bebida{
     constructor(id, tipo, marca, sabor, medida, precio, imagen){
 //atributos-propiedades
@@ -151,12 +154,19 @@ function mostrarCatalogoDOM(array){
                         <p>sabor: ${bebida.sabor}</p>
                         <p>medida: ${bebida.medida} L</p>
                         <p class="">Precio: ${bebida.precio}</p>
-                    <button id="" class="btn btn-outline-secondary">Agregar al carrito</button>
+                    <button id="agregarBtn${bebida.id}" class="btn btn-outline-secondary">Agregar al carrito</button>
                     </div>
         </div> `
         containerBebidas.append(bebidaNuevaDiv)
+
+        let agregarBtn = document.getElementById(`agregarBtn${bebida.id}`)
+        console.log(agregarBtn)
+        agregarBtn.addEventListener("click", () => {
+        agregarAlCarrito(bebida)
+        
+    })
     }
-}
+} 
 
 mostrarCatalogoDOM(estanteria)
 
@@ -177,12 +187,13 @@ function agregarBebida(array){
     const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
     console.log(nuevaBebida)
     array.push(nuevaBebida) 
+    // formCargarBebida.reset()
     tipo.value =""
     marca.value =""
     sabor.value =""
     medida.value =""
     precio.value =""     
-    // formCargarBebida.reset() 
+    // Notificacion
     Swal.fire ({
         title: `Excelente has agregado un tipo de Bebida`,
         text: `La Bebida ${nuevaBebida.marca} sabor ${nuevaBebida.sabor} de ${nuevaBebida.medida} L se ha sumado.`,
@@ -396,7 +407,7 @@ for (let i = 0; i < tiposDeGaseosas.length; i++) {
     let litrosPorFardo = tiposDeGaseosas[i].medida* tiposDeGaseosas[i].unidadesPorBulto()
     litrosPorFardoDeGaseosa[labelGaseosa] = litrosPorFardo
     ;
-    
+
 }
 
 for (let i = 0; i < tiposDeCervezas.length; i++) {
@@ -468,6 +479,128 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
         
                 console.log (muestraDeDatosFinal)
                 }
-
+            
+            
         console.log(acumGaseosa20)
+    })
+
+///////////////////////////////////////
+//////                          ///////
+//////  AGREGAR AL CARRITO     ///////
+//////                          ///////
+///////////////////////////////////////
+let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
+let botonCarrito = document.getElementById("botonCarrito")
+let precioTotal = document.getElementById("precioTotal")
+let botonFinalizarCompra = document.getElementById(`botonFinalizarCompra`)
+
+
+
+function agregarAlCarrito(elemento){
+    //pusheo al array carrito:
+    console.log(`funciona Bebida Nro: ${elemento.id} ${elemento.marca} ${elemento.sabor} de ${elemento.medida} L`)
+    console.log(productosCarrito)
+
+    //preguntar: existe este libro(elemento) en el array??
+    let bebidaAgregada = productosCarrito.find((bebida) => bebida.id == elemento.id)
+    //realizado con operador ternario
+    bebidaAgregada == undefined ?  
+            (//pusheo al array carrito:
+            productosCarrito.push(elemento),
+            
+            //setStorage
+            sessionStorage.setItem("carrito", JSON.stringify(productosCarrito)),
+            
+            Toastify({
+                text: `La Bebida ${elemento.tipo} ${elemento.marca} ${elemento.sabor} ${elemento.medida} L ha sido sumado al carrito`,
+                duration: 4000,
+                gravity: "bottom", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                }).showToast()) :
+                Toastify({
+                text: `La Bebida ${elemento.tipo} ${elemento.marca} ${elemento.sabor} ${elemento.medida} L ya existe en el carrito`,
+                duration: 2500,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                style: {
+                background: "linear-gradient(to right, red, orange)",
+                 color: "black",
+                  fontWeight: "bold"
+                },
+              }).showToast()
+              console.log(productosCarrito)
+            }
+
+function cargarProductosCarrito(array){
+    modalBodyCarrito.innerHTML = ""
+    array.forEach(
+        (productoCarrito) => {
+            modalBodyCarrito.innerHTML += `
+            <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 100%;">
+                 <img class="card-img-top top-50 start-50" style="width: 80%;" src="./js/assets/img/${productoCarrito.imagen}" alt="">
+                 <div class="card-body">
+                        <h4 class="card-title">${productoCarrito.marca}</h4>
+                        <p class="card-text">${productoCarrito.sabor}</p>
+                         <p class="card-text">$${productoCarrito.precio}</p> 
+                         <button class= "btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
+                 </div>    
+            </div>
+            `}
+    )
+    //segundo for each quiero adjuntar evento eliminar
+    array.forEach(
+        (productoCarrito) => {
+            //similar let btnBorrar = document.getElementById(`botonEliminar${productoCarrito.id}`)
+            //capturar nodo sin guardarlo en variable:
+            document.getElementById(`botonEliminar${productoCarrito.id}`).addEventListener("click", () =>{
+                //borrar del DOM
+                let cardProducto = document.getElementById(`productoCarrito${productoCarrito.id}`)
+                cardProducto.remove()
+                //borrar del array
+                //obtener posición del elemento y lo borro
+                let posicion = array.indexOf(productoCarrito)
+                array.splice(posicion, 1)
+                //borrar del storage
+                sessionStorage.setItem("carrito", JSON.stringify(array))
+                //actualizamos el total
+                calcularTotal(array) 
+            })
+        }
+    )
+    calcularTotal(array)    
+}
+function calcularTotal(array){
+    //function con spread (no necesariamente debe ser así)
+    
+    const totalReduce = array.reduce(
+        //dos parámetros: funcion e inicio de valor del acumulador
+        //como el carrito maneja cantidad, debe ser precio *cantidad
+        (acumulador, bebida)=>
+        {return acumulador + bebida.precio},
+        
+    )
+    totalReduce > 0 ? precioTotal.innerHTML = `<strong>El total de su compra es: ${totalReduce}</strong>` : precioTotal.innerHTML = `No hay productos en el carrito` 
+    return totalReduce
+}
+
+function finalizarCompra(array){
+    //alguna alerta nos diga que finalizo (con el .then agregamos confirmar compra)
+    let total = calcularTotal(array)
+    Swal.fire({
+        text: `Gracias por su compra, usted ha gastado ${total}`
+    })
+    //limpiar el carrito (desp mejoramos forma)
+    productosCarrito = []
+    //actualizar storage
+    sessionStorage.removeItem("carrito")
+    document.getElementById("contar-items").innerHTML ="0";
+}
+    botonCarrito.addEventListener("click", () => {
+        cargarProductosCarrito(productosCarrito)
+    })
+    botonFinalizarCompra.addEventListener("click", () =>{
+        finalizarCompra(productosCarrito)
     })
