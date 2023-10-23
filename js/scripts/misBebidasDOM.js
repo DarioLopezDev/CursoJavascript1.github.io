@@ -573,14 +573,14 @@ function cargarProductosCarrito(array){
     calcularTotal(array)    
 }
 function calcularTotal(array){
-    //function con spread (no necesariamente debe ser así)
+    //function con spread 
     
     const totalReduce = array.reduce(
         //dos parámetros: funcion e inicio de valor del acumulador
         //como el carrito maneja cantidad, debe ser precio *cantidad
         (acumulador, bebida)=>
         {return acumulador + bebida.precio},
-        
+        0
     )
     totalReduce > 0 ? precioTotal.innerHTML = `<strong>El total de su compra es: ${totalReduce}</strong>` : precioTotal.innerHTML = `No hay productos en el carrito` 
     return totalReduce
@@ -592,7 +592,7 @@ function finalizarCompra(array){
     Swal.fire({
         text: `Gracias por su compra, usted ha gastado ${total}`
     })
-    //limpiar el carrito (desp mejoramos forma)
+    //limpiar el carrito
     productosCarrito = []
     //actualizar storage
     sessionStorage.removeItem("carrito")
