@@ -9,6 +9,9 @@ let litrosPorFardoDeFernet = {}
 let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
 console.log(productosCarrito)
 
+let selectOrden = document.getElementById("selectOrden")
+let buscador = document.getElementById("buscador")
+
 class Bebida{
     constructor(id, tipo, marca, sabor, medida, precio, imagen){
 //atributos-propiedades
@@ -19,6 +22,8 @@ class Bebida{
         this.medida = medida,
         this.precio = precio,
         this.imagen = imagen
+        //no es stock, solo sirve para el carrito
+        this.cantidad = 1
     }
 //métodos en class se declaran por fuera del constructor
     unidadesPorBulto () {
@@ -42,7 +47,17 @@ class Bebida{
     }
     exponerEnCatalogo()
     {console.log(this.id, this.tipo, this.marca, this.sabor, this.medida, this.precio, this.imagen)}
+    
+    //sumarUnidad()
+    sumarUnidad(){
+        this.cantidad++
+        return this.cantidad
     }
+    restarUnidad(){
+        this.cantidad = this.cantidad - 1
+        return this.cantidad
+    }
+}
 //Instanciación de objetos: 
     const gaseosa1 = new Bebida(1, "Gaseosa", "Coca Cola", "Cola", 3, 5600, "coca3.webp")
 
@@ -153,6 +168,7 @@ function mostrarCatalogoDOM(array){
                         <p>marca: ${bebida.marca}</p>
                         <p>sabor: ${bebida.sabor}</p>
                         <p>medida: ${bebida.medida} L</p>
+                        <p> Este Producto contiene <b>${bebida.unidadesPorBulto(bebida.medida)} </b> unidades en el fardo </p>
                         <p class="">Precio: ${bebida.precio}</p>
                     <button id="agregarBtn${bebida.id}" class="btn btn-outline-secondary">Agregar al carrito</button>
                     </div>
@@ -544,8 +560,12 @@ function cargarProductosCarrito(array){
                  <div class="card-body">
                         <h4 class="card-title">${productoCarrito.marca}</h4>
                         <p class="card-text">${productoCarrito.sabor}</p>
-                         <p class="card-text">$${productoCarrito.precio}</p> 
-                         <button class= "btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
+                        <p class="card-text">$${productoCarrito.precio}</p>
+                        <p class="card-text">Total de unidades ${productoCarrito.cantidad}</p> 
+                        <p class="card-text">SubTotal ${productoCarrito.cantidad * productoCarrito.precio}</p> 
+                        <button class= "btn btn-success" id="botonSumarUnidad${productoCarrito.id}"><i class=""></i>+</button>
+                        <button class= "btn btn-danger" id="botonEliminarUnidad${productoCarrito.id}"><i class=""></i>-</button>
+                        <button class= "btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
                  </div>    
             </div>
             `}
@@ -553,6 +573,43 @@ function cargarProductosCarrito(array){
     //segundo for each quiero adjuntar evento eliminar
     array.forEach(
         (productoCarrito) => {
+                        //EVENTO SUMAR UNIDAD:
+                        document.getElementById(`botonSumarUnidad${productoCarrito.id}`).addEventListener("click", 
+                        ()=>{
+                            //en el array el producto ya suma una unidad
+                            productoCarrito.sumarUnidad()
+                            //cada vez que modificamos la cantidad setear el storage:
+                            sessionStorage.setItem("carrito", JSON.stringify(array))
+                            cargarProductosCarrito(array)
+            
+                        })
+            
+                        //EVENTO RESTAR UNIDAD:
+                        document.getElementById(`botonEliminarUnidad${productoCarrito.id}`).addEventListener("click",
+                        ()=>{
+                            let cantidadActual = productoCarrito.cantidad
+                            console.log(cantidadActual)
+                            if(cantidadActual <= 1){
+                                //borrar del DOM
+                                let cardProducto = document.getElementById(`productoCarrito${productoCarrito.id}`)
+                                cardProducto.remove()
+                                //borrar del array
+                                //obtener posición del elemento y lo borro
+                                let posicion = array.indexOf(productoCarrito)
+                                array.splice(posicion, 1)
+                                //borrar del storage
+                                sessionStorage.setItem("carrito", JSON.stringify(array))
+                                //actualizamos el total
+                                calcularTotal(array)
+                            }else{
+                                productoCarrito.restarUnidad()
+                            }
+                            //cada vez que modificamos la cantidad setear el storage:
+                            sessionStorage.setItem("carrito", JSON.stringify(array))
+                            cargarProductosCarrito(array)
+                        })
+            
+
             //similar let btnBorrar = document.getElementById(`botonEliminar${productoCarrito.id}`)
             //capturar nodo sin guardarlo en variable:
             document.getElementById(`botonEliminar${productoCarrito.id}`).addEventListener("click", () =>{
@@ -579,7 +636,7 @@ function calcularTotal(array){
         //dos parámetros: funcion e inicio de valor del acumulador
         //como el carrito maneja cantidad, debe ser precio *cantidad
         (acumulador, bebida)=>
-        {return acumulador + bebida.precio},
+        {return acumulador + bebida.precio * bebida.cantidad},
         0
     )
     totalReduce > 0 ? precioTotal.innerHTML = `<strong>El total de su compra es: ${totalReduce}</strong>` : precioTotal.innerHTML = `No hay productos en el carrito` 
@@ -603,4 +660,74 @@ function finalizarCompra(array){
     })
     botonFinalizarCompra.addEventListener("click", () =>{
         finalizarCompra(productosCarrito)
+    })
+
+    function ordenarMayorMenor(array){
+        //copiar array: 
+        let arrayMayorMenor = array.concat()
+        
+         arrayMayorMenor.sort(
+            (par1,par2) => par2.precio - par1.precio
+        )
+        mostrarCatalogoDOM(arrayMayorMenor)
+    }
+    function ordenarMenorMayor(ar){
+        let arrMenor = ar.concat()
+        arrMenor.sort(
+            //menor a mayor
+            (a, b) => a.precio - b.precio
+        )
+        mostrarCatalogoDOM(arrMenor)
+    }
+    function ordenarAlfabeticamenteMarca(array){
+        let ordenadoAlf = array.concat()
+        ordenadoAlf.sort(
+            (a,b) => {
+                if(a.marca > b.marca){
+                    return 1
+                }
+                if(a.marca < b.marca){
+                    return -1
+                }
+                //no es ni mayor ni menor
+                return 0
+            }
+        )
+        mostrarCatalogoDOM(ordenadoAlf)
+    }
+    function buscarInfo(buscado,array){
+        //me devuelve un array vacio si no encuentra, sino un array elementos con la coincidencias
+        let coincidencias = array.filter(
+            (bebida) => {
+                //includes cualquier coincidencia parcial en el string con includes
+                return bebida.marca.toLowerCase().includes(buscado.toLowerCase()) || bebida.marca.toLowerCase().includes(buscado.toLowerCase())
+            }
+        )
+        //ternario para evaluar si coincidencias está vacio
+        //ternario, tenemos varias instrucciones encerrar entre parentesis y separar por coma ,
+        coincidencias.length > 0 ? (mostrarCatalogoDOM(coincidencias), coincidenciasDiv.innerHTML ="") : (mostrarCatalogoDOM(array), coincidenciasDiv.innerHTML = `<h3>No hay coincidencias con su búsqueda, este es nuestro catálogo completo</h3>`) 
+    }
+
+    buscador.addEventListener("input", () => {
+        console.log(buscador.value)
+        buscarInfo(buscador.value,estanteria)
+    })
+
+    selectOrden.addEventListener("change", () => {
+        // console.log("Detecto cambio")
+        console.log(selectOrden.value)
+        switch(selectOrden.value){
+            case "1":
+                ordenarMayorMenor(estanteria)
+            break
+            case "2":
+                ordenarMenorMayor(estanteria)
+            break
+            case "3":
+                ordenarAlfabeticamenteMarca(estanteria)
+            break
+            default:
+                mostrarCatalogoDOM(estanteria)
+            break
+        }
     })
