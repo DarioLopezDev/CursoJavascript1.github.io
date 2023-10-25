@@ -1,6 +1,6 @@
 import {tiposDeFernet} from "./misBebidasDOM.js"; 
 
-export let nroInputsFernet =[0]
+export let nroInputsFernet =[]
 
 const inputFernet = (obj) => {
     let fernetContainer = document.createElement("div")
@@ -62,7 +62,7 @@ contenedorAgregado.appendChild(input)
 contenedorAgregado.appendChild(selector)
 return contenedorAgregado
 }
-let contadorId = 1
+let contadorId = 0
 
 let botonAgregarTipoFernet = document.getElementById("botonAgregarTipoFernet")
 botonAgregarTipoFernet.addEventListener ("click", () => {console.log("estoyaqui")
@@ -76,3 +76,28 @@ botonAgregarTipoFernet.addEventListener ("click", () => {console.log("estoyaqui"
     contadorId++
     nroInputsFernet.push(0)
 })
+
+let cargaPorDefectoFernet = () => {
+    let contenedorGeneralFernet = document.getElementById("contenedorGeneralFernet")
+    let contenedorAgregado2 = contenedorAgregado ()
+    let contenedorInput = contenedorAgregado2.querySelector("input")
+    contenedorInput.id = `inputFernet${contadorId}`
+    let contenedorSelect = contenedorAgregado2.querySelector("select")
+    contenedorSelect.id = `selectFernet${contadorId}`
+    contenedorGeneralFernet.appendChild (contenedorAgregado2)  
+    contadorId++
+    nroInputsFernet.push(0)
+}
+
+let botonCalculadora = document.getElementById ("botonCalculadoraBebidas")
+    botonCalculadora.addEventListener("click", () => {console.log(`contadorFernet`,contadorId)
+        
+    
+        let contenedorGeneralFernet = document.getElementById ("contenedorGeneralFernet")
+        contenedorGeneralFernet.innerHTML = ""
+        contadorId = 0
+        nroInputsFernet = []
+        console.log(`contadorFernet`,contadorId)
+        cargaPorDefectoFernet()
+
+    })

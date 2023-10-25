@@ -35,7 +35,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css
                     <button id="agregarBebida" data-bs-toggle="modal" data-bs-target="#idModalAgregarBebida" class="btn btn-secondary">Agregar bebida</button>
                     <button id="btnToggle" class="btn btn-secondary mx-3">ModoOscuro</button>  
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Calcular Bebidas</button>
+<button type="button" id="botonCalculadoraBebidas" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Calcular Bebidas</button>
 <!-- MODAL DE CALCULADORA DE BEBIDAS-->
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" data-bs-backdrop="static" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -92,49 +92,19 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css
                 <div id="contenedorCalculadora" class="container-fluid row">
                     <h3>GASEOSA</h3>
                     <div id="contenedorGeneralGaseosa" class="container-fluid col-12">
-                    <div class="container-fluid row">
-                        <div id="inputPorcentajeGaseosa" class = "col-4">
-                            <label for="porcentajeGaseosa">0% al 100%</label>
-                            <input type="number" class="form-control" id="inputGaseosa0" placeholder="Ej: 11, 22, 50, 100" value="">
-                        </div>
-                        <div id = "selectGaseosa"class = "col-8"><br>
-                            <select id= "selectGaseosa0"class="form-select gaseosaDefault" aria-label="Default select example">
-                            </select>
-                                <br>
-                        </div>
-                    </div>
+                    
                     </div>
                         <div class="col-4"></div>
                         <button type="button" id="botonAgregarTipoGaseosa" class="btn btn-secondary col-4">Agregar otro tipo de Fardo</button>       
                         <h3>CERVEZA</h3>
                         <div id="contenedorGeneralCerveza" class="container-fluid col-12">
-                        <div class= "container-fluid row">
-                            <div id="inputPorcentajeGaseosa" class = "col-4">
-                            <label for="porcentajeCerveza">0% al 100%</label>
-                            <input type="number" class="form-control" id="inputCerveza0" placeholder="Ej: 11, 22, 50, 100" value="">
-                        </div>
-                        <div class = "col-8"><br>
-                            <select id= "selectCerveza0"class="form-select cervezaDefault" aria-label="Default select example">
-                                </select>
-                                <br>
-                            </div>
-                        </div>
+                        
                         </div> 
                         <div class="col-4"></div>
                         <button type="button" id="botonAgregarTipoCerveza" class="btn btn-secondary col-4">Agregar otro tipo de Fardo</button> 
                         <h3>FERNET</h3>
                         <div id="contenedorGeneralFernet" class="container-fluid col-12">
-                        <div class= "container-fluid row">
-                            <div id="inputPorcentajeFernet" class = "col-4">
-                            <label for="porcentajeFernet">0% al 100%</label>
-                            <input type="number" class="form-control" id="inputFernet0" placeholder="Ej: 11, 22, 50, 100" value="">
-                        </div>
-                        <div class = "col-8"><br>
-                            <select id="selectFernet0" class="form-select fernetDefault" aria-label="Default select example">
-                            </select>
-                            <br>
-                            </div>
-                        </div>
+                        
                     </div> 
                         <div class="col-4"></div>
                         <button type="button" id="botonAgregarTipoFernet" class="btn btn-secondary col-4">Agregar otro tipo de Fardo</button> 

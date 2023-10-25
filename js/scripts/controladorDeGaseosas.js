@@ -1,6 +1,6 @@
 import {tiposDeGaseosas} from "./misBebidasDOM.js"; 
 
-export let nroInputsGaseosa =[0]
+export let nroInputsGaseosa =[]
 
 const inputGaseosa = (obj) => {
     let gaseosaContainer = document.createElement("div")
@@ -62,7 +62,7 @@ contenedorAgregado.appendChild(input)
 contenedorAgregado.appendChild(selector)
 return contenedorAgregado
 }
-let contadorId = 1
+let contadorId = 0
 
 let botonAgregarTipoGaseosa = document.getElementById("botonAgregarTipoGaseosa")
 botonAgregarTipoGaseosa.addEventListener ("click", () => {console.log("estoyaqui")
@@ -76,3 +76,28 @@ botonAgregarTipoGaseosa.addEventListener ("click", () => {console.log("estoyaqui
     contadorId++ 
     nroInputsGaseosa.push(0)
 })
+
+    let cargaPorDefectoGaseosa = () => {
+    let contenedorGeneralGaseosa = document.getElementById("contenedorGeneralGaseosa")
+    let contenedorAgregado2 = contenedorAgregado ()
+    let contenedorInput = contenedorAgregado2.querySelector("input")
+    contenedorInput.id = `inputGaseosa${contadorId}`
+    let contenedorSelect = contenedorAgregado2.querySelector("select")
+    contenedorSelect.id = `selectGaseosa${contadorId}`
+    contenedorGeneralGaseosa.appendChild (contenedorAgregado2)  
+    contadorId++ 
+    nroInputsGaseosa.push(0)
+}  
+
+let botonCalculadora = document.getElementById ("botonCalculadoraBebidas")
+    botonCalculadora.addEventListener("click", () => {console.log(`contadorGaseosa`,contadorId)
+        sectorMuestraDeCalculo.innerHTML = ""
+    
+        let contenedorGeneralGaseosa = document.getElementById ("contenedorGeneralGaseosa")
+        contenedorGeneralGaseosa.innerHTML = ""
+        contadorId = 0
+        nroInputsGaseosa = []
+        console.log(`contadorGaseosa`,contadorId)
+        cargaPorDefectoGaseosa()
+
+    })

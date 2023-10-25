@@ -203,6 +203,11 @@ function agregarBebida(array){
     const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
     console.log(nuevaBebida)
     array.push(nuevaBebida) 
+    //agrego estas lineas para determinar en que array de bebidas
+    tipo.value === "Gaseosa" ? tiposDeGaseosas.push(nuevaBebida) : ""
+    tipo.value === "Cerveza" ? tiposDeCervezas.push(nuevaBebida) : ""
+    tipo.value === "Fernet" ? tiposDeFernet.push(nuevaBebida) : ""
+
     // formCargarBebida.reset()
     tipo.value =""
     marca.value =""
@@ -397,7 +402,7 @@ limpiarCalculadoraBtn.addEventListener("click", () => {
     // preventDefault()
     limpiarCalc()
 })
-let cargarDatos = (obj,clase)=>{
+/* let cargarDatos = (obj,clase)=>{
     let selector = document.querySelector (`.${clase}`)
     for (let i = 0; i < obj.length; i++) {
         let optionGaseosa = document.createElement("option")
@@ -411,7 +416,7 @@ let cargarDatos = (obj,clase)=>{
 cargarDatos(tiposDeGaseosas,"gaseosaDefault")
 cargarDatos(tiposDeCervezas,"cervezaDefault")
 cargarDatos(tiposDeFernet,"fernetDefault")
-
+ */
 ///////////////////////////////////////
 //////                          ///////
 //////  CALCULADORA DE FARDOS   ///////
@@ -731,3 +736,5 @@ function finalizarCompra(array){
             break
         }
     })
+
+    
