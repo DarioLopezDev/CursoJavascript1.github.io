@@ -1,7 +1,14 @@
+//CAPTURA DOM
+//ES PARA INGRESAR CODIGO DE LA HORA EN EL MAIN
+let horaDiv =document.getElementById("hora")
+
+
 import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
 import {nroInputsCerveza} from "./controladorDeCervezas.js"
 import {nroInputsFernet} from "./controladorDeFernet.js"
 //se utiliza en linea 389
+
+
 let litrosPorFardoDeGaseosa = {}
 let litrosPorFardoDeCerveza = {}
 let litrosPorFardoDeFernet = {}
@@ -736,5 +743,12 @@ function finalizarCompra(array){
             break
         }
     })
-
+//Muestra la Hora y se actualiza cada 1 seg. 
+    setTimeout(()=>{
+    const DateTime = luxon.DateTime
     
+    setInterval(()=>{
+        let horaActual = DateTime.now()
+        horaDiv.innerHTML = `${horaActual.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}`
+    },1000)
+    })
