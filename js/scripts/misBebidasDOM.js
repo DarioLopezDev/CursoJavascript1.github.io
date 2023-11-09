@@ -13,7 +13,7 @@ let litrosPorFardoDeGaseosa = {}
 let litrosPorFardoDeCerveza = {}
 let litrosPorFardoDeFernet = {}
 //
-let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
+let productosCarrito = JSON.parse(localStorage.getItem(`carrito`)) ?? []
 console.log(productosCarrito)
 
 let selectOrden = document.getElementById("selectOrden")
@@ -65,7 +65,7 @@ class Bebida{
         return this.cantidad
     }
 }
-//Instanciación de objetos: 
+/* //Instanciación de objetos: 
     const gaseosa1 = new Bebida(1, "Gaseosa", "Coca Cola", "Cola", 3, 5600, "coca3.webp")
 
     const gaseosa2 = new Bebida(2, "Gaseosa", "Sprite", "Lima Limon", 3, 5400, "sprite3.webp")
@@ -89,13 +89,41 @@ class Bebida{
     const cerveza3 = new Bebida(11, "Cerveza", "Quilmes", "Lager", 0.473, 9200, "quilmes473.webp")
 
     const fernet750 = new Bebida(12, "Fernet", "Branca", "Clasico", 0.750, 36000, "fernet750.webp")
+ */
+
+// Cargar con Fetch => deposito
+
+/* function cargarBebidas (array) {
+fetch ("./js/scripts/bebidas.json")
+.then ((resp) => resp.json ())
+.then ((dataBebidas) => {
+    //dataBebidas es mi array con la informacion del .Json
+    for (let bebida of dataBebidas){
+        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+        array.push(bebidaNueva)
+    }
+    localStorage.setItem("deposito", JSON.stringify(array))
+})
+return array
+}
+ */
+const cargarDeposito = async () => {
+    const resp = await fetch ("./js/scripts/bebidas.json")
+    const dataBebidas = await resp.json ()
+    for (let bebida of dataBebidas){
+        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+        deposito.push(bebidaNueva)
+    }
+    localStorage.setItem("deposito", JSON.stringify(deposito))
+    mostrarCatalogoDOM(deposito)
+} 
 
 //creo una variable que sera el array de las gaseosas.
 //la exporto para usarla en controlador de Fardos.js
 export const tiposDeGaseosas = []
 //hago push dentro del array con todos los objetos gaseosas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las gaseosas incluso las que agreguen despues
-tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gaseosa7,gaseosa8)
+/* tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gaseosa7,gaseosa8) */
 // console log para comprobar que esten cargadas las gaseosas en el array y no continue vacio.
 console.log(tiposDeGaseosas.length)
 
@@ -104,7 +132,7 @@ console.log(tiposDeGaseosas.length)
 export const tiposDeCervezas = []
 //hago push dentro del array con todos los objetos cervezas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las cervezas incluso las que agreguen despues
-tiposDeCervezas.push (cerveza1, cerveza2, cerveza3)
+/* tiposDeCervezas.push (cerveza1, cerveza2, cerveza3) */
 // console log para comprobar que esten cargadas las cervezas en el array y no continue vacio.
 console.log(tiposDeCervezas.length)
 
@@ -113,39 +141,44 @@ console.log(tiposDeCervezas.length)
 export const tiposDeFernet = []
 //hago push dentro del array con todos los objetos fernet
 //aqui tengo que mejorar con un for o algo asi para que se carguen todos los fernet incluso los que agreguen despues
-tiposDeFernet.push (fernet750)
+/* tiposDeFernet.push (fernet750) */
 // console log para comprobar que esten cargados los fernet en el array y no continue vacio.
 console.log(tiposDeFernet.length)
 
 //console log para comprobar que la funcion retorne el valor correcto de unidades por bulto segun la medida de la misma.    
-    let mostrar = gaseosa8.unidadesPorBulto ();
-    console.log(mostrar);
+/*     let mostrar = gaseosa8.unidadesPorBulto ();
+    console.log(mostrar); */
 //console log para comprobar que la funcion retorne, si se descomenta en la linea 28 entrega bien, sino entrega undefined por el scope.
-    let mostrar2 = gaseosa8.mostrarInfoBebida()
-    console.log(mostrar2);
+ /*    let mostrar2 = gaseosa8.mostrarInfoBebida()
+    console.log(mostrar2); */
 
 //arrays de objetos:
-//es preguntar si estanteria existe en el storage:
+//es preguntar si deposito existe en el storage:
 //si existe, hay info cargada
 
-let estanteria = []
-if(sessionStorage.getItem("estanteria")){
+let deposito = []
+if(localStorage.getItem("deposito")){
     console.log("ya existe")
     
-    // estanteria = JSON.parse(sessionStorage.getItem("estanteria"))
-    //hacer for of de estanteria y pasarle new Bebida
-    for(let bebida of JSON.parse(sessionStorage.getItem("estanteria"))){
+    // deposito = JSON.parse(localStorage.getItem("deposito"))
+    //hacer for of de deposito y pasarle new Bebida
+    for(let bebida of JSON.parse(localStorage.getItem("deposito"))){
         let bebidaStorage = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        estanteria.push(bebidaStorage)
+        deposito.push(bebidaStorage)
     }
-    console.log(estanteria)
+    console.log(deposito)
 
 }else{
-    //no existe seteamos por primera vez
     console.log("seteamos por primera vez")
-    estanteria.push(gaseosa1, gaseosa2, gaseosa3, gaseosa4, gaseosa5, gaseosa6, gaseosa7, gaseosa8, cerveza1, cerveza2, cerveza3,fernet750)
-    console.log(estanteria)
-    sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
+    /* deposito = cargarBebidas (deposito)
+    console.log(deposito) */
+    //no existe seteamos por primera vez
+    /* 
+    deposito.push(gaseosa1, gaseosa2, gaseosa3, gaseosa4, gaseosa5, gaseosa6, gaseosa7, gaseosa8, cerveza1, cerveza2, cerveza3,fernet750)
+    console.log(deposito)
+    localStorage.setItem("deposito", JSON.stringify(deposito)) */
+    //function ASYNC para cargar bebidas
+    cargarDeposito()
 }
 
 function mostrarCatalogo(array){
@@ -191,7 +224,7 @@ function mostrarCatalogoDOM(array){
     }
 } 
 
-mostrarCatalogoDOM(estanteria)
+
 
 //EVENTOS: 
 let formCargarBebida = document.getElementById("formCargarBebida")
@@ -232,7 +265,7 @@ function agregarBebida(array){
         timer: 5500
     })
     //SETEAR STORAGE 
-    sessionStorage.setItem("estanteria", JSON.stringify(estanteria))
+    localStorage.setItem("deposito", JSON.stringify(deposito))
     //hacer con toastify una notificacion
     
 
@@ -241,10 +274,10 @@ let guardarBebidaBtn = document.getElementById("guardarBebidaBtn")
 //adjuntar evento:
 guardarBebidaBtn.addEventListener("click", () =>{
     // preventDefault()
-    agregarBebida(estanteria)
-    mostrarCatalogoDOM(estanteria)
+    agregarBebida(deposito)
+    mostrarCatalogoDOM(deposito)
 } )
-// agregarBebida(estanteria)
+// agregarBebida(deposito)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||| ESTABLEZCO CONSTANTES Y FORMULAS PARA EL CALCULO  |||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -331,7 +364,7 @@ haceFrioOCalor()
 
     let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
     console.log(arrayDatosIngresados)
-    sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
+    localStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
 
     //declaro las variables fuera de la funcion para que no queden atrapadas en el scope
     let acumGaseosa20 = 0
@@ -537,7 +570,7 @@ function agregarAlCarrito(elemento){
             productosCarrito.push(elemento),
             
             //setStorage
-            sessionStorage.setItem("carrito", JSON.stringify(productosCarrito)),
+            localStorage.setItem("carrito", JSON.stringify(productosCarrito)),
             
             Toastify({
                 text: `La Bebida ${elemento.tipo} ${elemento.marca} ${elemento.sabor} ${elemento.medida} L ha sido sumado al carrito`,
@@ -591,7 +624,7 @@ function cargarProductosCarrito(array){
                             //en el array el producto ya suma una unidad
                             productoCarrito.sumarUnidad()
                             //cada vez que modificamos la cantidad setear el storage:
-                            sessionStorage.setItem("carrito", JSON.stringify(array))
+                            localStorage.setItem("carrito", JSON.stringify(array))
                             cargarProductosCarrito(array)
             
                         })
@@ -610,14 +643,14 @@ function cargarProductosCarrito(array){
                                 let posicion = array.indexOf(productoCarrito)
                                 array.splice(posicion, 1)
                                 //borrar del storage
-                                sessionStorage.setItem("carrito", JSON.stringify(array))
+                                localStorage.setItem("carrito", JSON.stringify(array))
                                 //actualizamos el total
                                 calcularTotal(array)
                             }else{
                                 productoCarrito.restarUnidad()
                             }
                             //cada vez que modificamos la cantidad setear el storage:
-                            sessionStorage.setItem("carrito", JSON.stringify(array))
+                            localStorage.setItem("carrito", JSON.stringify(array))
                             cargarProductosCarrito(array)
                         })
             
@@ -633,7 +666,7 @@ function cargarProductosCarrito(array){
                 let posicion = array.indexOf(productoCarrito)
                 array.splice(posicion, 1)
                 //borrar del storage
-                sessionStorage.setItem("carrito", JSON.stringify(array))
+                localStorage.setItem("carrito", JSON.stringify(array))
                 //actualizamos el total
                 calcularTotal(array) 
             })
@@ -664,7 +697,7 @@ function finalizarCompra(array){
     //limpiar el carrito
     productosCarrito = []
     //actualizar storage
-    sessionStorage.removeItem("carrito")
+    localStorage.removeItem("carrito")
     document.getElementById("contar-items").innerHTML ="0";
 }
     botonCarrito.addEventListener("click", () => {
@@ -722,7 +755,7 @@ function finalizarCompra(array){
 
     buscador.addEventListener("input", () => {
         console.log(buscador.value)
-        buscarInfo(buscador.value,estanteria)
+        buscarInfo(buscador.value,deposito)
     })
 
     selectOrden.addEventListener("change", () => {
@@ -730,16 +763,16 @@ function finalizarCompra(array){
         console.log(selectOrden.value)
         switch(selectOrden.value){
             case "1":
-                ordenarMayorMenor(estanteria)
+                ordenarMayorMenor(deposito)
             break
             case "2":
-                ordenarMenorMayor(estanteria)
+                ordenarMenorMayor(deposito)
             break
             case "3":
-                ordenarAlfabeticamenteMarca(estanteria)
+                ordenarAlfabeticamenteMarca(deposito)
             break
             default:
-                mostrarCatalogoDOM(estanteria)
+                mostrarCatalogoDOM(deposito)
             break
         }
     })
