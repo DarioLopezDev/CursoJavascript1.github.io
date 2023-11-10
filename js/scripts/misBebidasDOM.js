@@ -2,6 +2,7 @@
 //ES PARA INGRESAR CODIGO DE LA HORA EN EL MAIN
 let horaDiv =document.getElementById("hora")
 
+let deposito = []
 
 import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
 import {nroInputsCerveza} from "./controladorDeCervezas.js"
@@ -107,12 +108,24 @@ fetch ("./js/scripts/bebidas.json")
 return array
 }
  */
+export const tiposDeGaseosas = []
+export const tiposDeCervezas = []
+export const tiposDeFernet = []
 const cargarDeposito = async () => {
     const resp = await fetch ("./js/scripts/bebidas.json")
     const dataBebidas = await resp.json ()
     for (let bebida of dataBebidas){
         let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
         deposito.push(bebidaNueva)
+            if (bebidaNueva.tipo == "Gaseosa") {
+                tiposDeGaseosas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Cerveza") {
+                tiposDeCervezas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Fernet") {
+                tiposDeFernet.push(bebidaNueva)
+            }
     }
     localStorage.setItem("deposito", JSON.stringify(deposito))
     mostrarCatalogoDOM(deposito)
@@ -120,16 +133,17 @@ const cargarDeposito = async () => {
 
 //creo una variable que sera el array de las gaseosas.
 //la exporto para usarla en controlador de Fardos.js
-export const tiposDeGaseosas = []
+
 //hago push dentro del array con todos los objetos gaseosas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las gaseosas incluso las que agreguen despues
 /* tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gaseosa7,gaseosa8) */
+
+
 // console log para comprobar que esten cargadas las gaseosas en el array y no continue vacio.
 console.log(tiposDeGaseosas.length)
-
 //creo una variable que sera el array de las cervezas.
 //la exporto para usarla en controlador de Fardos.js
-export const tiposDeCervezas = []
+
 //hago push dentro del array con todos los objetos cervezas
 //aqui tengo que mejorar con un for o algo asi para que se carguen todas las cervezas incluso las que agreguen despues
 /* tiposDeCervezas.push (cerveza1, cerveza2, cerveza3) */
@@ -138,7 +152,7 @@ console.log(tiposDeCervezas.length)
 
 //creo una variable que sera el array del fernet.
 //la exporto para usarla en controlador de Fardos.js
-export const tiposDeFernet = []
+
 //hago push dentro del array con todos los objetos fernet
 //aqui tengo que mejorar con un for o algo asi para que se carguen todos los fernet incluso los que agreguen despues
 /* tiposDeFernet.push (fernet750) */
@@ -156,7 +170,7 @@ console.log(tiposDeFernet.length)
 //es preguntar si deposito existe en el storage:
 //si existe, hay info cargada
 
-let deposito = []
+
 if(localStorage.getItem("deposito")){
     console.log("ya existe")
     
@@ -462,6 +476,9 @@ cargarDatos(tiposDeFernet,"fernetDefault")
 //////  CALCULADORA DE FARDOS   ///////
 //////                          ///////
 ///////////////////////////////////////
+console.log (tiposDeGaseosas[0])
+console.log (tiposDeCervezas[0])
+console.log (tiposDeFernet[0])
 
 for (let i = 0; i < tiposDeGaseosas.length; i++) {
     let labelGaseosa = `${tiposDeGaseosas[i].marca} ${tiposDeGaseosas[i].sabor} ${tiposDeGaseosas[i].medida} L`
@@ -707,6 +724,13 @@ function finalizarCompra(array){
         finalizarCompra(productosCarrito)
     })
 
+///////////////////////////////////////
+/////                            //////
+/////  Buscar, Filtros y Ordenar //////
+/////                            //////
+///////////////////////////////////////
+
+
     function ordenarMayorMenor(array){
         //copiar array: 
         let arrayMayorMenor = array.concat()
@@ -776,6 +800,13 @@ function finalizarCompra(array){
             break
         }
     })
+
+///////////////////////////////////////
+/////                            //////
+/////  Muestra la Fecha y Hora   //////
+/////                            //////
+///////////////////////////////////////
+
 //Muestra la Hora y se actualiza cada 1 seg. 
     setTimeout(()=>{
     const DateTime = luxon.DateTime
