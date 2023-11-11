@@ -1,25 +1,33 @@
 //CAPTURA DOM
-//ES PARA INGRESAR CODIGO DE LA HORA EN EL MAIN
-let horaDiv =document.getElementById("hora")
 
-let deposito = []
+//Fecha  y Hora
+let horaDiv = document.getElementById("hora")
 
+let selectOrden = document.getElementById("selectOrden")
+let buscador = document.getElementById("buscador")
+let containerBebidas = document.getElementById("bebidas")
+let formCargarBebida = document.getElementById("formCargarBebida")
+let guardarBebidaBtn = document.getElementById("guardarBebidaBtn")
+
+//Carrito
+let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
+let botonCarrito = document.getElementById("botonCarrito")
+let precioTotal = document.getElementById("precioTotal")
+let botonFinalizarCompra = document.getElementById(`botonFinalizarCompra`)
+
+//Importo variables para usar en el calculo de fardos
 import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
 import {nroInputsCerveza} from "./controladorDeCervezas.js"
 import {nroInputsFernet} from "./controladorDeFernet.js"
+
 //se utiliza en linea 389
-
-
 let litrosPorFardoDeGaseosa = {}
 let litrosPorFardoDeCerveza = {}
 let litrosPorFardoDeFernet = {}
 //
-let productosCarrito = JSON.parse(localStorage.getItem(`carrito`)) ?? []
-console.log(productosCarrito)
+let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
 
-let selectOrden = document.getElementById("selectOrden")
-let buscador = document.getElementById("buscador")
-
+//CREO EL CONSTRUCTOR
 class Bebida{
     constructor(id, tipo, marca, sabor, medida, precio, imagen){
 //atributos-propiedades
@@ -33,30 +41,22 @@ class Bebida{
         //no es stock, solo sirve para el carrito
         this.cantidad = 1
     }
-//métodos en class se declaran por fuera del constructor
+//Metodos
     unidadesPorBulto () {
-/*esta comentada una parte porque intento hacer condiciones dentro de las condiciones, porque hay gaseosas como la secco y la Crush que viene en fardos de 4 botellas pero el console log de la linea nro50 me muestra otro resultado al que tiene que ser, no me estaria tomando las condiciones de &&*/
-        if (this.medida == 3 /* && this.marca == "Coca Cola" || "Pepsi"  || "Sprite" || "Fanta" */) {return 6}
-        /* else if (this.medida == 3 && this.marca == "Secco" || "Crush") {return 4}
-        else if (this.medida == 3 && this.marca != "Secco" || "Crush") {return 6} */
+        if (this.medida == 3 ) {return 6}
         else if (this.medida == 2.25) {return 8}
         else if (this.medida == 1.75) {return 8}
         else if (this.medida == 1.5) {return 6}
-        else if (this.medida == 0.75) {return 12} //fernet
+        else if (this.medida == 0.75) {return 12}
         else if (this.medida == 0.5) {return 12}
-        else if (this.medida == 0.473) {return 24} //latasDeCervezas
+        else if (this.medida == 0.473) {return 24}
         else if (this.medida == 0.375) {return 12}
         else return "la medida no esta cargada en la base de datos comuniquese con su programador de confianza"
     }
     mostrarInfoBebida(){
         console.log(`La bebida tiene como id el numero ${this.id}, es del tipo ${this.tipo}, es marca ${this.marca}, su sabor es ${this.sabor}, su medida es ${this.medida} Litros, el bulto trae ${this.unidadesPorBulto()} unidades y su precio es ${this.precio}`)
-
-        /* return `La bebida tiene como id el numero ${this.id}, es del tipo ${this.tipo}, es marca ${this.marca}, su sabor es ${this.sabor}, su medida es ${this.medida} Litros, el bulto trae ${this.unidadesPorBulto()} unidades y su precio es ${this.precio}` */
     }
-    exponerEnCatalogo()
-    {console.log(this.id, this.tipo, this.marca, this.sabor, this.medida, this.precio, this.imagen)}
-    
-    //sumarUnidad()
+//Metodos para el carrito
     sumarUnidad(){
         this.cantidad++
         return this.cantidad
@@ -65,150 +65,13 @@ class Bebida{
         this.cantidad = this.cantidad - 1
         return this.cantidad
     }
-}
-/* //Instanciación de objetos: 
-    const gaseosa1 = new Bebida(1, "Gaseosa", "Coca Cola", "Cola", 3, 5600, "coca3.webp")
-
-    const gaseosa2 = new Bebida(2, "Gaseosa", "Sprite", "Lima Limon", 3, 5400, "sprite3.webp")
-
-    const gaseosa3 = new Bebida(3, "Gaseosa", "Fanta", "Naranja", 3, 5400, "fanta3.webp")
-
-    const gaseosa4 = new Bebida(4, "Gaseosa", "Pepsi", "Cola", 3, 4900, "pepsi3.webp")
-
-    const gaseosa5 = new Bebida(5, "Gaseosa", "Pepsi","Cola", 2.25, 5000, "pepsi225.webp")
-
-    const gaseosa6 = new Bebida(6, "Gaseosa", "Mirinda", "Manzana", 2.25, 4800, "mirinda225.webp")
-
-    const gaseosa7 = new Bebida(7, "Gaseosa", "Paso De Los Toros", "Pomelo", 2.25, 5300, "paso225.webp")
-
-    const gaseosa8 = new Bebida(8, "Gaseosa", "Coca Cola", "Cola", 0.375, 2300, "coca375.webp")
-
-    const cerveza1 = new Bebida(9, "Cerveza", "Imperial", "Lager", 0.473, 9500, "imperial473.webp")
-    
-    const cerveza2 = new Bebida(10, "Cerveza", "Imperial Golden", "Lager", 0.473, 9700, "golden473.webp")
-    
-    const cerveza3 = new Bebida(11, "Cerveza", "Quilmes", "Lager", 0.473, 9200, "quilmes473.webp")
-
-    const fernet750 = new Bebida(12, "Fernet", "Branca", "Clasico", 0.750, 36000, "fernet750.webp")
- */
-
-// Cargar con Fetch => deposito
-
-/* function cargarBebidas (array) {
-fetch ("./js/scripts/bebidas.json")
-.then ((resp) => resp.json ())
-.then ((dataBebidas) => {
-    //dataBebidas es mi array con la informacion del .Json
-    for (let bebida of dataBebidas){
-        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        array.push(bebidaNueva)
-    }
-    localStorage.setItem("deposito", JSON.stringify(array))
-})
-return array
-}
- */
-export const tiposDeGaseosas = []
-export const tiposDeCervezas = []
-export const tiposDeFernet = []
-const cargarDeposito = async () => {
-    const resp = await fetch ("./js/scripts/bebidas.json")
-    const dataBebidas = await resp.json ()
-    for (let bebida of dataBebidas){
-        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        deposito.push(bebidaNueva)
-            if (bebidaNueva.tipo == "Gaseosa") {
-                tiposDeGaseosas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Cerveza") {
-                tiposDeCervezas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Fernet") {
-                tiposDeFernet.push(bebidaNueva)
-            }
-    }
-    localStorage.setItem("deposito", JSON.stringify(deposito))
-    mostrarCatalogoDOM(deposito)
 } 
 
-//creo una variable que sera el array de las gaseosas.
-//la exporto para usarla en controlador de Fardos.js
-
-//hago push dentro del array con todos los objetos gaseosas
-//aqui tengo que mejorar con un for o algo asi para que se carguen todas las gaseosas incluso las que agreguen despues
-/* tiposDeGaseosas.push (gaseosa1,gaseosa2,gaseosa3,gaseosa4,gaseosa5,gaseosa6,gaseosa7,gaseosa8) */
-
-
-// console log para comprobar que esten cargadas las gaseosas en el array y no continue vacio.
-console.log(tiposDeGaseosas.length)
-//creo una variable que sera el array de las cervezas.
-//la exporto para usarla en controlador de Fardos.js
-
-//hago push dentro del array con todos los objetos cervezas
-//aqui tengo que mejorar con un for o algo asi para que se carguen todas las cervezas incluso las que agreguen despues
-/* tiposDeCervezas.push (cerveza1, cerveza2, cerveza3) */
-// console log para comprobar que esten cargadas las cervezas en el array y no continue vacio.
-console.log(tiposDeCervezas.length)
-
-//creo una variable que sera el array del fernet.
-//la exporto para usarla en controlador de Fardos.js
-
-//hago push dentro del array con todos los objetos fernet
-//aqui tengo que mejorar con un for o algo asi para que se carguen todos los fernet incluso los que agreguen despues
-/* tiposDeFernet.push (fernet750) */
-// console log para comprobar que esten cargados los fernet en el array y no continue vacio.
-console.log(tiposDeFernet.length)
-
-//console log para comprobar que la funcion retorne el valor correcto de unidades por bulto segun la medida de la misma.    
-/*     let mostrar = gaseosa8.unidadesPorBulto ();
-    console.log(mostrar); */
-//console log para comprobar que la funcion retorne, si se descomenta en la linea 28 entrega bien, sino entrega undefined por el scope.
- /*    let mostrar2 = gaseosa8.mostrarInfoBebida()
-    console.log(mostrar2); */
-
-//arrays de objetos:
-//es preguntar si deposito existe en el storage:
-//si existe, hay info cargada
-
-
-if(localStorage.getItem("deposito")){
-    console.log("ya existe")
-    
-    // deposito = JSON.parse(localStorage.getItem("deposito"))
-    //hacer for of de deposito y pasarle new Bebida
-    for(let bebida of JSON.parse(localStorage.getItem("deposito"))){
-        let bebidaStorage = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        deposito.push(bebidaStorage)
-    }
-    console.log(deposito)
-
-}else{
-    console.log("seteamos por primera vez")
-    /* deposito = cargarBebidas (deposito)
-    console.log(deposito) */
-    //no existe seteamos por primera vez
-    /* 
-    deposito.push(gaseosa1, gaseosa2, gaseosa3, gaseosa4, gaseosa5, gaseosa6, gaseosa7, gaseosa8, cerveza1, cerveza2, cerveza3,fernet750)
-    console.log(deposito)
-    localStorage.setItem("deposito", JSON.stringify(deposito)) */
-    //function ASYNC para cargar bebidas
-    cargarDeposito()
-}
-
-function mostrarCatalogo(array){
-    //for of: para recorrer un array posición a posición
-    console.log("Nuestro catálogo es: ")
-    for(let bebida of array){
-        bebida.exponerEnCatalogo()
-    }
-}
-
-let containerBebidas = document.getElementById("bebidas")
-
+//esta funcion muestra el catalogo de lo que tenga cargado el array que recibe por parametro, inyecta codigo HTML en el DOM para visualizar los productos.
 function mostrarCatalogoDOM(array){
-    //resetear el container
+
     containerBebidas.innerHTML = ""
-    //for of: para recorrer un array posición a posición
+
     for(let bebida of array){
         
         let bebidaNuevaDiv= document.createElement("div")
@@ -230,7 +93,7 @@ function mostrarCatalogoDOM(array){
         containerBebidas.append(bebidaNuevaDiv)
 
         let agregarBtn = document.getElementById(`agregarBtn${bebida.id}`)
-        console.log(agregarBtn)
+
         agregarBtn.addEventListener("click", () => {
         agregarAlCarrito(bebida)
         
@@ -238,37 +101,73 @@ function mostrarCatalogoDOM(array){
     }
 } 
 
+//Creo la variable para mi deposito donde se almacenaran todas mis bebidas
+let deposito = []
 
+//Creo las variables donde se almacenan las bebidas dependiendo de su tipo.
+export const tiposDeGaseosas = []
+export const tiposDeCervezas = []
+export const tiposDeFernet = []
 
-//EVENTOS: 
-let formCargarBebida = document.getElementById("formCargarBebida")
+//Creo la funcion que toma los Datos del archivo bebidas.json y los convierte en objetos guardados en un array dentro de la variable deposito
+const cargarDeposito = async () => {
+    const resp = await fetch ("./js/scripts/bebidas.json")
+    const dataBebidas = await resp.json ()
+    for (let bebida of dataBebidas){
+        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+        deposito.push(bebidaNueva)
+            if (bebidaNueva.tipo == "Gaseosa") {
+                tiposDeGaseosas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Cerveza") {
+                tiposDeCervezas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Fernet") {
+                tiposDeFernet.push(bebidaNueva)
+            }
+    }
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
+    sessionStorage.setItem("deposito", JSON.stringify(deposito))
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeGaseosa
+    sessionStorage.setItem("tiposDeGaseosa", JSON.stringify(tiposDeGaseosas))
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeCerveza
+sessionStorage.setItem("tiposDeCerveza", JSON.stringify(tiposDeCervezas))
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeFernet
+sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
+
+//Una vez cargado el deposito muestra en el DOM todas mis bebidas
+    mostrarCatalogoDOM(deposito)
+} 
+//Establece una Condicion si existe deposito en el sessionStorage
+if(sessionStorage.getItem("deposito")){
+//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe, entonces no pasa nada
+
+}else{
+//si no esta cargado entonces ejecuta la funcion cargar deposito
+    cargarDeposito()
+}
+
 function agregarBebida(array){
     let tipo = document.getElementById("tipoInput")
     let marca = document.getElementById("marcaInput")
     let sabor = document.getElementById("saborInput")
     let medida = document.getElementById("medidaInput")
     let precio = document.getElementById("precioInput")
-    console.log(tipo)
-    console.log(marca)
-    console.log(sabor)
-    console.log(medida)
-    console.log(precio)
-    //instanciarlo en un objeto:
+
     const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
-    console.log(nuevaBebida)
     array.push(nuevaBebida) 
-    //agrego estas lineas para determinar en que array de bebidas
+
     tipo.value === "Gaseosa" ? tiposDeGaseosas.push(nuevaBebida) : ""
     tipo.value === "Cerveza" ? tiposDeCervezas.push(nuevaBebida) : ""
     tipo.value === "Fernet" ? tiposDeFernet.push(nuevaBebida) : ""
 
-    // formCargarBebida.reset()
+
     tipo.value =""
     marca.value =""
     sabor.value =""
     medida.value =""
-    precio.value =""     
-    // Notificacion
+    precio.value ="" 
+
     Swal.fire ({
         title: `Excelente has agregado un tipo de Bebida`,
         text: `La Bebida ${nuevaBebida.marca} sabor ${nuevaBebida.sabor} de ${nuevaBebida.medida} L se ha sumado.`,
@@ -278,38 +177,29 @@ function agregarBebida(array){
         showConfirmButton: false,
         timer: 5500
     })
-    //SETEAR STORAGE 
-    localStorage.setItem("deposito", JSON.stringify(deposito))
-    //hacer con toastify una notificacion
+    sessionStorage.setItem("deposito", JSON.stringify(deposito))
+
     
 
 }
-let guardarBebidaBtn = document.getElementById("guardarBebidaBtn")
-//adjuntar evento:
+
+
+
 guardarBebidaBtn.addEventListener("click", () =>{
-    // preventDefault()
     agregarBebida(deposito)
     mostrarCatalogoDOM(deposito)
 } )
-// agregarBebida(deposito)
+
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||| ESTABLEZCO CONSTANTES Y FORMULAS PARA EL CALCULO  |||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-//coeficientes en litros por cada 1 hora de evento por cada persona.
 const coefgaseosas = 0.5
 const coefcerveza = 0.25
 const coeffernet = 0.045
-//coeficientes para disminuir o aumentar la cantidad por persona dependiendo del calor o frio
+
 const coeffrio = 0.82
 const coefcalor = 1.18
-//variables que van a ser acumuladores de cada tipo en litros
-/* let acumGaseosa = Number
-let acumCerveza = Number
-let acumFernet = Number */
-
-// toma los datos del modal que se abre en la calculadora de bebidas.
-//let formCalcLitros = document.getElementById("formCalcLitros")
 
 function cantidadAdultos(){
     let cantAdultos = 0
@@ -319,7 +209,6 @@ function cantidadAdultos(){
     else{
         cantAdultos = document.getElementById("cantAdultos").value;
     }
-    console.log(cantAdultos);
     return (cantAdultos.value) 
 }
 
@@ -331,7 +220,7 @@ function cantidadNinios(){
     else{
         cantNinios = document.getElementById("cantNinios").value;
     }
-    console.log(cantNinios);
+
     return (cantNinios.value) 
 }
 
@@ -343,7 +232,6 @@ function cantidadHoras(){
     else{
         cantHoras = document.getElementById("cantHoras").value;
     }
-    console.log(cantHoras);
     return (cantHoras.value) 
 }
 
@@ -355,32 +243,21 @@ function haceFrioOCalor(){
     else{
         frioOCalor = document.getElementById("frioOCalor").value;
     }
-        //si el usuario eligio frio convierte a la variable frioCalor al coeficiente de frio y si el usuario eligio calor a su respectivo coeficiente.
     if (frioOCalor == 1) {
         frioOCalor = coeffrio}
     else if (frioOCalor == 2) {
         frioOCalor = coefcalor} 
-    console.log (frioOCalor)
     return (frioOCalor.value)
     }
-//ejecuto las funciones 
+
 cantidadAdultos()
 cantidadNinios()
 cantidadHoras()
 haceFrioOCalor()
 
-    console.log(cantAdultos.value)
-    console.log(cantNinios.value)
-    console.log(cantHoras.value)
-    console.log(frioOCalor.value)
-
-    
-
     let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
-    console.log(arrayDatosIngresados)
-    localStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
+    sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
 
-    //declaro las variables fuera de la funcion para que no queden atrapadas en el scope
     let acumGaseosa20 = 0
     let acumCerveza20 = 0
     let acumFernet20 = 0
@@ -388,9 +265,9 @@ haceFrioOCalor()
     let calorOFrio
 
     let botonCalcular = document.getElementById("botonCalcular")
-//adjuntar evento:
+
     botonCalcular.addEventListener("click", () =>{
-    // preventDefault()
+    
     let acumGaseosa2 = document.getElementById("acumGaseosa2")
     let acumCerveza2 = document.getElementById("acumCerveza2")
     let acumFernet2 = document.getElementById("acumFernet2")
@@ -399,36 +276,18 @@ haceFrioOCalor()
         calorOFrio = coeffrio }
         else if (frioOCalor.value == 2){
         calorOFrio = coefcalor } 
-    console.log(frioOCalor)
-    //calculos de bebida
+
 let acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * calorOFrio + cantNinios.value * coefgaseosas * cantHoras.value * calorOFrio
 let acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * calorOFrio
 let acumFernet = cantAdultos.value * coeffernet * cantHoras.value * calorOFrio
 
-    console.log(cantAdultos.value)
-    console.log(cantNinios.value)
-    console.log(cantHoras.value)
-    console.log(calorOFrio.value)
-    console.log(coefgaseosas)
-
-    console.log(acumGaseosa)
-    console.log(acumCerveza)
-    console.log(acumFernet)
-
-
-//indica si es Frio o Calor en letras para que el usuario lea en la formula final dependiendo de lo que haya elegido
 let frioCalorRetorno
 if (frioOCalor.value == 1) {
 frioCalorRetorno = "Frio"}
 else if (frioOCalor.value == 2){
 frioCalorRetorno = "Calor" } 
 
-    console.log(frioOCalor.value)
-    console.log(frioOCalor2)
-    console.log(frioCalorRetorno)
-
     let arrayLitrosCalculados = [acumGaseosa, acumCerveza, acumFernet, frioCalorRetorno]
-    console.log(arrayLitrosCalculados)
 
     acumGaseosa2.value = acumGaseosa.toFixed(0)
     acumCerveza2.value = acumCerveza.toFixed(0)
@@ -453,32 +312,14 @@ function limpiarCalc() {
     frioOCalor2.value = ""
 }
 limpiarCalculadoraBtn.addEventListener("click", () => {
-    // preventDefault()
     limpiarCalc()
 })
-/* let cargarDatos = (obj,clase)=>{
-    let selector = document.querySelector (`.${clase}`)
-    for (let i = 0; i < obj.length; i++) {
-        let optionGaseosa = document.createElement("option")
-        optionGaseosa.value = i+1
-        console.log (obj)
-        optionGaseosa.innerText = `${obj[i].marca} ${obj[i].sabor} ${obj[i].medida} L`
-    
-        selector.appendChild(optionGaseosa)
-    } 
-}
-cargarDatos(tiposDeGaseosas,"gaseosaDefault")
-cargarDatos(tiposDeCervezas,"cervezaDefault")
-cargarDatos(tiposDeFernet,"fernetDefault")
- */
+
 ///////////////////////////////////////
 //////                          ///////
 //////  CALCULADORA DE FARDOS   ///////
 //////                          ///////
 ///////////////////////////////////////
-console.log (tiposDeGaseosas[0])
-console.log (tiposDeCervezas[0])
-console.log (tiposDeFernet[0])
 
 for (let i = 0; i < tiposDeGaseosas.length; i++) {
     let labelGaseosa = `${tiposDeGaseosas[i].marca} ${tiposDeGaseosas[i].sabor} ${tiposDeGaseosas[i].medida} L`
@@ -504,7 +345,6 @@ for (let i = 0; i < tiposDeFernet.length; i++) {
     
 }
 let botonCalcularFardos = document.getElementById("botonCalcularFardos")
-//adjuntar evento:
     botonCalcularFardos.addEventListener("click", () =>{
         sectorMuestraDeCalculo.innerHTML = "";
         for (let i = 0; i < nroInputsGaseosa.length; i++) {
@@ -520,8 +360,6 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
         muestraResultadoG.className ="text-bg-dark text-center";
         muestraResultadoG.textContent = muestraDeDatosFinal;
         sectorMuestraDeCalculo.appendChild(muestraResultadoG);
-
-        console.log (muestraDeDatosFinal)
         }
         
         for (let i = 0; i < nroInputsCerveza.length; i++) {
@@ -537,8 +375,6 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
             muestraResultadoC.className ="text-bg-dark text-center"
             muestraResultadoC.textContent = muestraDeDatosFinal;
             sectorMuestraDeCalculo.appendChild(muestraResultadoC);
-    
-            console.log (muestraDeDatosFinal)
             }
 
             for (let i = 0; i < nroInputsFernet.length; i++) {
@@ -555,11 +391,8 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
                 muestraResultadoF.textContent = muestraDeDatosFinal;
                 sectorMuestraDeCalculo.appendChild(muestraResultadoF);
         
-                console.log (muestraDeDatosFinal)
                 }
             
-            
-        console.log(acumGaseosa20)
     })
 
 ///////////////////////////////////////
@@ -567,33 +400,25 @@ let botonCalcularFardos = document.getElementById("botonCalcularFardos")
 //////  AGREGAR AL CARRITO     ///////
 //////                          ///////
 ///////////////////////////////////////
-let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
-let botonCarrito = document.getElementById("botonCarrito")
-let precioTotal = document.getElementById("precioTotal")
-let botonFinalizarCompra = document.getElementById(`botonFinalizarCompra`)
+
 
 
 
 function agregarAlCarrito(elemento){
-    //pusheo al array carrito:
-    console.log(`funciona Bebida Nro: ${elemento.id} ${elemento.marca} ${elemento.sabor} de ${elemento.medida} L`)
-    console.log(productosCarrito)
 
-    //preguntar: existe este libro(elemento) en el array??
     let bebidaAgregada = productosCarrito.find((bebida) => bebida.id == elemento.id)
-    //realizado con operador ternario
     bebidaAgregada == undefined ?  
-            (//pusheo al array carrito:
+            (
             productosCarrito.push(elemento),
             
-            //setStorage
-            localStorage.setItem("carrito", JSON.stringify(productosCarrito)),
+
+            sessionStorage.setItem("carrito", JSON.stringify(productosCarrito)),
             
             Toastify({
                 text: `La Bebida ${elemento.tipo} ${elemento.marca} ${elemento.sabor} ${elemento.medida} L ha sido sumado al carrito`,
                 duration: 4000,
-                gravity: "bottom", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
+                gravity: "bottom",
+                position: "right", 
                 style: {
                 background: "linear-gradient(to right, #00b09b, #96c93d)",
                 },
@@ -601,15 +426,14 @@ function agregarAlCarrito(elemento){
                 Toastify({
                 text: `La Bebida ${elemento.tipo} ${elemento.marca} ${elemento.sabor} ${elemento.medida} L ya existe en el carrito`,
                 duration: 2500,
-                gravity: "top", // `top` or `bottom`
-                position: "center", // `left`, `center` or `right`
+                gravity: "top",
+                position: "center", 
                 style: {
                 background: "linear-gradient(to right, red, orange)",
                  color: "black",
                   fontWeight: "bold"
                 },
               }).showToast()
-              console.log(productosCarrito)
             }
 
 function cargarProductosCarrito(array){
@@ -632,59 +456,37 @@ function cargarProductosCarrito(array){
             </div>
             `}
     )
-    //segundo for each quiero adjuntar evento eliminar
     array.forEach(
         (productoCarrito) => {
-                        //EVENTO SUMAR UNIDAD:
                         document.getElementById(`botonSumarUnidad${productoCarrito.id}`).addEventListener("click", 
                         ()=>{
-                            //en el array el producto ya suma una unidad
                             productoCarrito.sumarUnidad()
-                            //cada vez que modificamos la cantidad setear el storage:
-                            localStorage.setItem("carrito", JSON.stringify(array))
+                            sessionStorage.setItem("carrito", JSON.stringify(array))
                             cargarProductosCarrito(array)
-            
                         })
-            
-                        //EVENTO RESTAR UNIDAD:
                         document.getElementById(`botonEliminarUnidad${productoCarrito.id}`).addEventListener("click",
                         ()=>{
                             let cantidadActual = productoCarrito.cantidad
-                            console.log(cantidadActual)
-                            if(cantidadActual <= 1){
-                                //borrar del DOM
+                                if(cantidadActual <= 1){
                                 let cardProducto = document.getElementById(`productoCarrito${productoCarrito.id}`)
                                 cardProducto.remove()
-                                //borrar del array
-                                //obtener posición del elemento y lo borro
                                 let posicion = array.indexOf(productoCarrito)
                                 array.splice(posicion, 1)
-                                //borrar del storage
-                                localStorage.setItem("carrito", JSON.stringify(array))
-                                //actualizamos el total
+                                sessionStorage.setItem("carrito", JSON.stringify(array))
                                 calcularTotal(array)
                             }else{
                                 productoCarrito.restarUnidad()
                             }
-                            //cada vez que modificamos la cantidad setear el storage:
-                            localStorage.setItem("carrito", JSON.stringify(array))
+                            sessionStorage.setItem("carrito", JSON.stringify(array))
                             cargarProductosCarrito(array)
                         })
             
-
-            //similar let btnBorrar = document.getElementById(`botonEliminar${productoCarrito.id}`)
-            //capturar nodo sin guardarlo en variable:
             document.getElementById(`botonEliminar${productoCarrito.id}`).addEventListener("click", () =>{
-                //borrar del DOM
                 let cardProducto = document.getElementById(`productoCarrito${productoCarrito.id}`)
                 cardProducto.remove()
-                //borrar del array
-                //obtener posición del elemento y lo borro
                 let posicion = array.indexOf(productoCarrito)
                 array.splice(posicion, 1)
-                //borrar del storage
-                localStorage.setItem("carrito", JSON.stringify(array))
-                //actualizamos el total
+                sessionStorage.setItem("carrito", JSON.stringify(array))
                 calcularTotal(array) 
             })
         }
@@ -692,11 +494,8 @@ function cargarProductosCarrito(array){
     calcularTotal(array)    
 }
 function calcularTotal(array){
-    //function con spread 
     
     const totalReduce = array.reduce(
-        //dos parámetros: funcion e inicio de valor del acumulador
-        //como el carrito maneja cantidad, debe ser precio *cantidad
         (acumulador, bebida)=>
         {return acumulador + bebida.precio * bebida.cantidad},
         0
@@ -706,15 +505,12 @@ function calcularTotal(array){
 }
 
 function finalizarCompra(array){
-    //alguna alerta nos diga que finalizo (con el .then agregamos confirmar compra)
     let total = calcularTotal(array)
     Swal.fire({
         text: `Gracias por su compra, usted ha gastado ${total}`
     })
-    //limpiar el carrito
     productosCarrito = []
-    //actualizar storage
-    localStorage.removeItem("carrito")
+    sessionStorage.removeItem("carrito")
     document.getElementById("contar-items").innerHTML ="0";
 }
     botonCarrito.addEventListener("click", () => {
@@ -732,7 +528,6 @@ function finalizarCompra(array){
 
 
     function ordenarMayorMenor(array){
-        //copiar array: 
         let arrayMayorMenor = array.concat()
         
          arrayMayorMenor.sort(
@@ -743,7 +538,6 @@ function finalizarCompra(array){
     function ordenarMenorMayor(ar){
         let arrMenor = ar.concat()
         arrMenor.sort(
-            //menor a mayor
             (a, b) => a.precio - b.precio
         )
         mostrarCatalogoDOM(arrMenor)
@@ -758,33 +552,27 @@ function finalizarCompra(array){
                 if(a.marca < b.marca){
                     return -1
                 }
-                //no es ni mayor ni menor
                 return 0
             }
         )
         mostrarCatalogoDOM(ordenadoAlf)
     }
     function buscarInfo(buscado,array){
-        //me devuelve un array vacio si no encuentra, sino un array elementos con la coincidencias
         let coincidencias = array.filter(
             (bebida) => {
-                //includes cualquier coincidencia parcial en el string con includes
                 return bebida.marca.toLowerCase().includes(buscado.toLowerCase()) || bebida.marca.toLowerCase().includes(buscado.toLowerCase())
             }
         )
-        //ternario para evaluar si coincidencias está vacio
-        //ternario, tenemos varias instrucciones encerrar entre parentesis y separar por coma ,
         coincidencias.length > 0 ? (mostrarCatalogoDOM(coincidencias), coincidenciasDiv.innerHTML ="") : (mostrarCatalogoDOM(array), coincidenciasDiv.innerHTML = `<h3>No hay coincidencias con su búsqueda, este es nuestro catálogo completo</h3>`) 
     }
 
     buscador.addEventListener("input", () => {
-        console.log(buscador.value)
+       
         buscarInfo(buscador.value,deposito)
     })
 
     selectOrden.addEventListener("change", () => {
-        // console.log("Detecto cambio")
-        console.log(selectOrden.value)
+        
         switch(selectOrden.value){
             case "1":
                 ordenarMayorMenor(deposito)

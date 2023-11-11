@@ -4,7 +4,6 @@ export let nroInputsFernet =[]
 
 const inputFernet = (obj) => {
     let fernetContainer = document.createElement("div")
-    console.log (fernetContainer)
     fernetContainer.className ="col-8"
 
     let br2 = document.createElement ("br")
@@ -24,12 +23,9 @@ const inputFernet = (obj) => {
     for (let i = 0; i < obj.length; i++) {
         let optionFernet = document.createElement("option")
         optionFernet.value = i+1
-        console.log (obj)
         optionFernet.innerText = `${obj[i].marca} ${obj[i].sabor} ${obj[i].medida} L`
-
         selectorFernet.appendChild(optionFernet)
     } 
-    console.log (fernetContainer)
     return fernetContainer
 }
 const inputPorcentajeFernet = () => {
@@ -50,7 +46,6 @@ const inputPorcentajeFernet = () => {
 
     porcentajeContainer.appendChild (porcentajeLabel)
     porcentajeContainer.appendChild (inputPorcentaje)
-    console.log (porcentajeContainer)
     return porcentajeContainer
 }
 const contenedorAgregado = () => {
@@ -65,7 +60,7 @@ return contenedorAgregado
 let contadorId = 0
 
 let botonAgregarTipoFernet = document.getElementById("botonAgregarTipoFernet")
-botonAgregarTipoFernet.addEventListener ("click", () => {console.log("estoyaqui")
+botonAgregarTipoFernet.addEventListener ("click", () => {
     let contenedorGeneralFernet = document.getElementById("contenedorGeneralFernet")
     let contenedorAgregado2 = contenedorAgregado ()
     let contenedorInput = contenedorAgregado2.querySelector("input")
@@ -90,14 +85,10 @@ let cargaPorDefectoFernet = () => {
 }
 
 let botonCalculadora = document.getElementById ("botonCalculadoraBebidas")
-    botonCalculadora.addEventListener("click", () => {console.log(`contadorFernet`,contadorId)
-        
-    
+    botonCalculadora.addEventListener("click", () => {
         let contenedorGeneralFernet = document.getElementById ("contenedorGeneralFernet")
         contenedorGeneralFernet.innerHTML = ""
         contadorId = 0
         nroInputsFernet = []
-        console.log(`contadorFernet`,contadorId)
         cargaPorDefectoFernet()
-
     })
