@@ -1,5 +1,4 @@
 //CAPTURA DOM
-
 //Fecha  y Hora
 let horaDiv = document.getElementById("hora")
 
@@ -66,8 +65,15 @@ class Bebida{
         return this.cantidad
     }
 } 
-
-//esta funcion muestra el catalogo de lo que tenga cargado el array que recibe por parametro, inyecta codigo HTML en el DOM para visualizar los productos.
+//esta funcion vacia todo el storage para poder recargar la pagina y no me duplique los elementos cargados
+function liberarStorage () {
+    localStorage.removeItem ("deposito")
+    localStorage.removeItem ("tiposDeGaseosas")
+    localStorage.removeItem ("tiposDeCervezas")
+    localStorage.removeItem ("tiposDeFernet")
+    localStorage.removeItem ("arrayDatosIngresados")
+    }
+//esta funcion muestra el catalogo de lo que tenga cargado el array que recibe por parametro, inyecta codigo HTML para visualizar los productos.
 function mostrarCatalogoDOM(array){
 
     containerBebidas.innerHTML = ""
@@ -128,25 +134,25 @@ const cargarDeposito = async () => {
     }
 //Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
     sessionStorage.setItem("deposito", JSON.stringify(deposito))
-//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeGaseosa
-    sessionStorage.setItem("tiposDeGaseosa", JSON.stringify(tiposDeGaseosas))
-//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeCerveza
-sessionStorage.setItem("tiposDeCerveza", JSON.stringify(tiposDeCervezas))
-//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable tiposDeFernet
-sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
+//Almacena en el sessionStorage la key tiposDeGaseosas la cual almacena todos los datos de la variable tiposDeGaseosa
+    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
+//Almacena en el sessionStorage la key tiposDeCervezas la cual almacena todos los datos de la variable tiposDeCerveza
+    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
+//Almacena en el sessionStorage la key tiposDeFernet la cual almacena todos los datos de la variable tiposDeFernet
+    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
 
-//Una vez cargado el deposito muestra en el DOM todas mis bebidas
+//Una vez cargada la variable "deposito" muestra visualmente en el navegador todas mis bebidas
     mostrarCatalogoDOM(deposito)
 } 
 //Establece una Condicion si existe deposito en el sessionStorage
 if(sessionStorage.getItem("deposito")){
-//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe, entonces no pasa nada
+//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe, no hace nada.|||||||REVISARRRRR|||||
 
 }else{
 //si no esta cargado entonces ejecuta la funcion cargar deposito
     cargarDeposito()
 }
-
+// Esta funcion se ejecuta para agregar los elementos que se carguen en el formulario agregar bebidas, el cual se accede desde el boton en el header, toma los elementos escritos en esos inputs cada uno tiene su propio id y almacena el valor ingresado en su correspondiente variable.
 function agregarBebida(array){
     let tipo = document.getElementById("tipoInput")
     let marca = document.getElementById("marcaInput")
@@ -154,20 +160,20 @@ function agregarBebida(array){
     let medida = document.getElementById("medidaInput")
     let precio = document.getElementById("precioInput")
 
-    const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
-    array.push(nuevaBebida) 
-
+//utiliza el constructor crea una nueva bebida 
+const nuevaBebida = new Bebida(array.length+1, tipo.value, marca.value, sabor.value, parseInt(medida.value), parseInt(precio.value), "bebidaNueva.webp")
+array.push(nuevaBebida) 
+//identifica si en el input con id "tipoInput" pusieron tipo Gaseosa entonces carga la bebida en el array de Gaseosas, si no no hace nada de igual forma para Cervezas y Fernet.
     tipo.value === "Gaseosa" ? tiposDeGaseosas.push(nuevaBebida) : ""
     tipo.value === "Cerveza" ? tiposDeCervezas.push(nuevaBebida) : ""
     tipo.value === "Fernet" ? tiposDeFernet.push(nuevaBebida) : ""
-
-
+//resetea los campos de los inputs para que queden vacios.
     tipo.value =""
     marca.value =""
     sabor.value =""
     medida.value =""
     precio.value ="" 
-
+//envia una notificacion con Sweet Alert indicando la Carga de la bebida
     Swal.fire ({
         title: `Excelente has agregado un tipo de Bebida`,
         text: `La Bebida ${nuevaBebida.marca} sabor ${nuevaBebida.sabor} de ${nuevaBebida.medida} L se ha sumado.`,
@@ -177,14 +183,14 @@ function agregarBebida(array){
         showConfirmButton: false,
         timer: 5500
     })
+//agrega a la key "deposito" en el sessionStorage, lo que esta cargado en la variable "deposito", suma la nueva unidad que ya se cargo en la variable "deposito" en la key "deposito" del sessionStorage igual para el resto
     sessionStorage.setItem("deposito", JSON.stringify(deposito))
+    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
+    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
+    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
+} //fin de la funcion agregarBebida
 
-    
-
-}
-
-
-
+//asigna un evento al boton guardarBebidaBtn que esta dentro del modal de agregarbebidas en el header del index.html, la funcion que tiene asignada al hacer click es agregar la bebida al array deposito y dependiendo del tipo a su correspondiente array (puede ser Gaseosa, Cerveza o Fernet) tambien carga las key en el sessionStorage con el nuevo producto, despues ejecuta la funcion mostrarCatalogoDOM con la variable "deposito" como parametro la cual muestra el nuevo elemento agregado visualmente en el navegador.
 guardarBebidaBtn.addEventListener("click", () =>{
     agregarBebida(deposito)
     mostrarCatalogoDOM(deposito)
