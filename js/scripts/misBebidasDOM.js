@@ -2,6 +2,7 @@
 //Fecha  y Hora
 let horaDiv = document.getElementById("hora")
 
+let botonCalcular = document.getElementById("botonCalcular")
 let selectOrden = document.getElementById("selectOrden")
 let buscador = document.getElementById("buscador")
 let containerBebidas = document.getElementById("bebidas")
@@ -200,113 +201,70 @@ guardarBebidaBtn.addEventListener("click", () =>{
 //|||| ESTABLEZCO CONSTANTES Y FORMULAS PARA EL CALCULO  |||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-const coefgaseosas = 0.5
-const coefcerveza = 0.25
-const coeffernet = 0.045
+const coefgaseosas = 0.5 //determino que en promedio una persona consume 0,5 litros de gaseosa por hora
+const coefcervezas = 0.25 //determino que en promedio una persona consume 0,5 litros de cerveza por hora
+const coeffernet = 0.045 //determino que en promedio una persona consume 0,5 litros de fernet por hora
 
-const coeffrio = 0.82
-const coefcalor = 1.18
+const coeffrio = 0.82 // determino que si hace frio en promedio se reduce el consumo un 18%
+const coefcalor = 1.18 // determino que si hace calor en promedio se aumenta el consumo un 18%
 
-function cantidadAdultos(){
-    let cantAdultos = 0
-    if(document.getElementById("cantAdultos").value === ""){
-        cantAdultos = 0;
-    }
-    else{
-        cantAdultos = document.getElementById("cantAdultos").value;
-    }
-    return (cantAdultos.value) 
-}
+const arrayLitrosCalculados = []
 
-function cantidadNinios(){
-    let cantNinios = 0
-    if(document.getElementById("cantNinios").value === ""){
-        cantNinios = 0;
-    }
-    else{
-        cantNinios = document.getElementById("cantNinios").value;
-    }
+//determino las variables que almacenan los valores cargados en los inputs de la calculadora en el modal que se abre desde el boton calculadora en el header
+let cantAdultos = document.getElementById("cantAdultos")
+let cantNinios = document.getElementById("cantNinios")
+let cantHoras = document.getElementById("cantHoras")
+let frioOCalor = document.getElementById("frioOCalor")
 
-    return (cantNinios.value) 
-}
+//creo un array con los datos ingresados en la calculadora
+let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
 
-function cantidadHoras(){
-    let cantHoras = 0
-    if(document.getElementById("cantHoras").value === ""){
-        cantHoras = 0;
-    }
-    else{
-        cantHoras = document.getElementById("cantHoras").value;
-    }
-    return (cantHoras.value) 
-}
+//cargo la key "arrayDatosIngresados" con los valores de la variable "arrayDatosIngresados"
+sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
 
-function haceFrioOCalor(){
-    let frioOCalor = 0
-    if(document.getElementById("frioOCalor").value === ""){
-        frioOCalor = 0;
-    }
-    else{
-        frioOCalor = document.getElementById("frioOCalor").value;
-    }
-    if (frioOCalor == 1) {
-        frioOCalor = coeffrio}
-    else if (frioOCalor == 2) {
-        frioOCalor = coefcalor} 
-    return (frioOCalor.value)
-    }
-
-cantidadAdultos()
-cantidadNinios()
-cantidadHoras()
-haceFrioOCalor()
-
-    let arrayDatosIngresados = [cantAdultos.value,cantNinios.value,cantHoras.value,frioOCalor.value]
-    sessionStorage.setItem ("arrayDatosIngresados",JSON.stringify(arrayDatosIngresados))
-
-    let acumGaseosa20 = 0
-    let acumCerveza20 = 0
-    let acumFernet20 = 0
-    let frioOCalor20 = ""
-    let calorOFrio
-
-    let botonCalcular = document.getElementById("botonCalcular")
-
-    botonCalcular.addEventListener("click", () =>{
-    
-    let acumGaseosa2 = document.getElementById("acumGaseosa2")
-    let acumCerveza2 = document.getElementById("acumCerveza2")
-    let acumFernet2 = document.getElementById("acumFernet2")
-    let frioOCalor2 = document.getElementById("frioOCalor2")
-    if (frioOCalor.value == 1) {
-        calorOFrio = coeffrio }
-        else if (frioOCalor.value == 2){
-        calorOFrio = coefcalor } 
-
-let acumGaseosa = cantAdultos.value * coefgaseosas * cantHoras.value * calorOFrio + cantNinios.value * coefgaseosas * cantHoras.value * calorOFrio
-let acumCerveza = cantAdultos.value * coefcerveza * cantHoras.value * calorOFrio
-let acumFernet = cantAdultos.value * coeffernet * cantHoras.value * calorOFrio
-
-let frioCalorRetorno
-if (frioOCalor.value == 1) {
-frioCalorRetorno = "Frio"}
-else if (frioOCalor.value == 2){
-frioCalorRetorno = "Calor" } 
-
-    let arrayLitrosCalculados = [acumGaseosa, acumCerveza, acumFernet, frioCalorRetorno]
-
-    acumGaseosa2.value = acumGaseosa.toFixed(0)
-    acumCerveza2.value = acumCerveza.toFixed(0)
-    acumFernet2.value = acumFernet.toFixed(0)
-    frioOCalor2.value = frioCalorRetorno
-
-    acumGaseosa20 = acumGaseosa2.value 
-    acumCerveza20 = acumCerveza2.value
-    acumFernet20 = acumFernet2.value
-    frioOCalor20 = frioOCalor2.value
-
+//al boton calcular le asigno al hacer click la funcion calculadoraDeLitros
+botonCalcular.addEventListener("click", () =>{
+    calculadoraDeLitros()
 })
 
+//funcion que calcula la cantidad de litros de Gaseosa, Cervezas y Fernet que se necesita para un evento
+function calculadoraDeLitros() {
+    let acumGaseosa = document.getElementById("acumGaseosa")
+    let acumCerveza = document.getElementById("acumCerveza")
+    let acumFernet = document.getElementById("acumFernet")
+    let frioOCalorResultado = document.getElementById("frioOCalorResultado")
+
+    //genero condicional que transforma la decision del usuario en el coeficiente que se necesita para el calculo, si elige frio osea 1 entonces carga el dato de 0,82 y si elige 2 carga el dato de 1,18 si carga cualquier otro dato te sale una alerta para que corrijas los datos
+frioOCalor.value !=1 && frioOCalor.value !=2 ? Swal.fire ({
+    title: `ERROR - DATO MAL INGRESADO`,
+    text: `ELIJA 1 O 2 PARA SABER SI HACE FRIO O CALOR`,
+    showConfirmButton: true,
+}): ""
+frioOCalor.value == 1 ? frioOCalor.value = coeffrio : frioOCalor.value = coefcalor
+
+//realizo el calculo en las variables acumuladoras tanto de gaseosa, cerveza y fernet
+ acumGaseosa.value = cantAdultos.value * coefgaseosas * cantHoras.value * frioOCalor.value + cantNinios.value * coefgaseosas * cantHoras.value * frioOCalor.value
+ acumCerveza.value = cantAdultos.value * coefcervezas * cantHoras.value * frioOCalor.value
+ acumFernet.value = cantAdultos.value * coeffernet * cantHoras.value * frioOCalor.value
+
+//es un condicional que transforma la eleccion del usuario en un string indicandole su eleccion, para que pueda visualizar que eligio o frio o calor.
+frioOCalor.value == coeffrio ? frioOCalorResultado.value = "Frio" : frioOCalorResultado.value = "Calor"
+
+//genero el redondeo de decimales sobre las variables acumuladoras
+acumGaseosa.value = Math.round(acumGaseosa.value)
+acumCerveza.value = Math.round(acumCerveza.value)
+acumFernet.value = Math.round(acumFernet.value)
+
+//cargo en un array todos los valores calculados en la calculadora
+arrayLitrosCalculados.push(acumGaseosa.value, acumCerveza.value, acumFernet.value, frioOCalorResultado.value)
+//genero la key "arrayLitrosCalculados" en el sessionStorage con los valores de la variable "arrayLitrosCalculados"
+sessionStorage.setItem ("arrayLitrosCalculados",JSON.stringify(arrayLitrosCalculados))
+//esto simplemente lo hago para que despues de todos los calculos visualmente vuelva a aparecer en el input 1 o 2 segun la opcion elegida por el usuario.
+frioOCalorResultado.value == "Calor" ? frioOCalor.value = 2 : frioOCalor.value = 1
+return arrayLitrosCalculados
+}
+
+console.log(arrayLitrosCalculados)
 function limpiarCalc() {
     cantAdultos.value = ""
     cantNinios.value = ""
@@ -528,7 +486,7 @@ function finalizarCompra(array){
 
 ///////////////////////////////////////
 /////                            //////
-/////  Buscar, Filtros y Ordenar //////
+/////  Buscar, Filtrar y Ordenar //////
 /////                            //////
 ///////////////////////////////////////
 
@@ -564,6 +522,7 @@ function finalizarCompra(array){
         mostrarCatalogoDOM(ordenadoAlf)
     }
     function buscarInfo(buscado,array){
+        let coincidenciasDiv
         let coincidencias = array.filter(
             (bebida) => {
                 return bebida.marca.toLowerCase().includes(buscado.toLowerCase()) || bebida.marca.toLowerCase().includes(buscado.toLowerCase())
