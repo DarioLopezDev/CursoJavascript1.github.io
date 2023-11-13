@@ -20,7 +20,62 @@ import {nroInputsGaseosa} from "./controladorDeGaseosas.js"
 import {nroInputsCerveza} from "./controladorDeCervezas.js"
 import {nroInputsFernet} from "./controladorDeFernet.js"
 
-//se utiliza en linea 389
+//Creo la variable para mi deposito donde se almacenaran todas mis bebidas
+let deposito = []
+
+//Creo las variables donde se almacenan las bebidas dependiendo de su tipo.
+export const tiposDeGaseosas = []
+export const tiposDeCervezas = []
+export const tiposDeFernet = []
+
+//Creo la funcion que toma los Datos del archivo bebidas.json y los convierte en objetos guardados en un array dentro de la variable deposito
+
+const cargarDeposito = async () => {
+    const resp = await fetch ("./js/scripts/bebidas.json")
+    const dataBebidas = await resp.json ()
+
+    for (let bebida of dataBebidas){
+        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+        deposito.push(bebidaNueva)
+            if (bebidaNueva.tipo == "Gaseosa") {
+                tiposDeGaseosas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Cerveza") {
+                tiposDeCervezas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Fernet") {
+                tiposDeFernet.push(bebidaNueva)
+            }
+    }
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
+    sessionStorage.setItem("deposito", JSON.stringify(deposito))
+//Almacena en el sessionStorage la key tiposDeGaseosas la cual almacena todos los datos de la variable tiposDeGaseosa
+    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
+//Almacena en el sessionStorage la key tiposDeCervezas la cual almacena todos los datos de la variable tiposDeCerveza
+    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
+//Almacena en el sessionStorage la key tiposDeFernet la cual almacena todos los datos de la variable tiposDeFernet
+    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
+
+//Una vez cargada la variable "deposito" muestra visualmente en el navegador todas mis bebidas
+    mostrarCatalogoDOM(deposito)
+}
+
+//Establece una Condicion si existe deposito en el sessionStorage
+if(sessionStorage.getItem("deposito")){
+//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe,borra todo del sessionStorage, ejecuta la funcion cargarDeposito y muestra el catalogo,
+for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    sessionStorage.removeItem(key);
+  }
+cargarDeposito()
+mostrarCatalogoDOM(deposito)
+}else{
+//si no esta cargado entonces ejecuta la funcion cargar deposito y muestra el catalogo
+    cargarDeposito()
+    mostrarCatalogoDOM(deposito)
+}
+
+//se utiliza en linea 289
 let litrosPorFardoDeGaseosa = {}
 let litrosPorFardoDeCerveza = {}
 let litrosPorFardoDeFernet = {}
@@ -108,51 +163,6 @@ function mostrarCatalogoDOM(array){
     }
 } 
 
-//Creo la variable para mi deposito donde se almacenaran todas mis bebidas
-let deposito = []
-
-//Creo las variables donde se almacenan las bebidas dependiendo de su tipo.
-export const tiposDeGaseosas = []
-export const tiposDeCervezas = []
-export const tiposDeFernet = []
-
-//Creo la funcion que toma los Datos del archivo bebidas.json y los convierte en objetos guardados en un array dentro de la variable deposito
-const cargarDeposito = async () => {
-    const resp = await fetch ("./js/scripts/bebidas.json")
-    const dataBebidas = await resp.json ()
-    for (let bebida of dataBebidas){
-        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        deposito.push(bebidaNueva)
-            if (bebidaNueva.tipo == "Gaseosa") {
-                tiposDeGaseosas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Cerveza") {
-                tiposDeCervezas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Fernet") {
-                tiposDeFernet.push(bebidaNueva)
-            }
-    }
-//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
-    sessionStorage.setItem("deposito", JSON.stringify(deposito))
-//Almacena en el sessionStorage la key tiposDeGaseosas la cual almacena todos los datos de la variable tiposDeGaseosa
-    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
-//Almacena en el sessionStorage la key tiposDeCervezas la cual almacena todos los datos de la variable tiposDeCerveza
-    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
-//Almacena en el sessionStorage la key tiposDeFernet la cual almacena todos los datos de la variable tiposDeFernet
-    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
-
-//Una vez cargada la variable "deposito" muestra visualmente en el navegador todas mis bebidas
-    mostrarCatalogoDOM(deposito)
-} 
-//Establece una Condicion si existe deposito en el sessionStorage
-if(sessionStorage.getItem("deposito")){
-//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe, no hace nada.|||||||REVISARRRRR|||||
-
-}else{
-//si no esta cargado entonces ejecuta la funcion cargar deposito
-    cargarDeposito()
-}
 // Esta funcion se ejecuta para agregar los elementos que se carguen en el formulario agregar bebidas, el cual se accede desde el boton en el header, toma los elementos escritos en esos inputs cada uno tiene su propio id y almacena el valor ingresado en su correspondiente variable.
 function agregarBebida(array){
     let tipo = document.getElementById("tipoInput")
@@ -264,17 +274,18 @@ frioOCalorResultado.value == "Calor" ? frioOCalor.value = 2 : frioOCalor.value =
 return arrayLitrosCalculados
 }
 
-console.log(arrayLitrosCalculados)
+//limpia la calculadora, deja en blanco todos los casilleros
 function limpiarCalc() {
     cantAdultos.value = ""
     cantNinios.value = ""
     cantHoras.value = ""
     frioOCalor.value = ""
-    acumGaseosa2.value = ""
-    acumCerveza2.value = ""
-    acumFernet2.value = ""
-    frioOCalor2.value = ""
+    acumGaseosa.value = ""
+    acumCerveza.value = ""
+    acumFernet.value = ""
+    frioOCalorResultado.value = ""
 }
+//boton que ejecuta la funcion limpiarcalculadora
 limpiarCalculadoraBtn.addEventListener("click", () => {
     limpiarCalc()
 })
@@ -284,89 +295,99 @@ limpiarCalculadoraBtn.addEventListener("click", () => {
 //////  CALCULADORA DE FARDOS   ///////
 //////                          ///////
 ///////////////////////////////////////
+let labelGaseosa = ""
+let labelCerveza = ""
+let labelFernet = ""
 
+function CalculadoraFardosGaseosa() {
 for (let i = 0; i < tiposDeGaseosas.length; i++) {
-    let labelGaseosa = `${tiposDeGaseosas[i].marca} ${tiposDeGaseosas[i].sabor} ${tiposDeGaseosas[i].medida} L`
+    labelGaseosa = `${tiposDeGaseosas[i].marca} ${tiposDeGaseosas[i].sabor} ${tiposDeGaseosas[i].medida} L`
     let litrosPorFardo = tiposDeGaseosas[i].medida* tiposDeGaseosas[i].unidadesPorBulto()
     litrosPorFardoDeGaseosa[labelGaseosa] = litrosPorFardo
-    ;
-
+}
 }
 
+function CalculadoraFardosCerveza() {
 for (let i = 0; i < tiposDeCervezas.length; i++) {
-    let labelCerveza = `${tiposDeCervezas[i].marca} ${tiposDeCervezas[i].sabor} ${tiposDeCervezas[i].medida} L`
-    let litrosPorFardo = tiposDeCervezas[i].medida* tiposDeCervezas[i].unidadesPorBulto()
+    labelCerveza = `${tiposDeCervezas[i].marca} ${tiposDeCervezas[i].sabor} ${tiposDeCervezas[i].medida} L`
+    let litrosPorFardo = tiposDeCervezas[i].medida* tiposDeCervezas[i].unidadesPorBulto(tiposDeCervezas[i].medida)
     litrosPorFardoDeCerveza[labelCerveza] = litrosPorFardo
-    ;
-    
+}
 }
 
+function CalculadoraFardosFernet() {
 for (let i = 0; i < tiposDeFernet.length; i++) {
-    let labelFernet = `${tiposDeFernet[i].marca} ${tiposDeFernet[i].sabor} ${tiposDeFernet[i].medida} L`
-    let litrosPorFardo = tiposDeFernet[i].medida* tiposDeFernet[i].unidadesPorBulto()
+    labelFernet = `${tiposDeFernet[i].marca} ${tiposDeFernet[i].sabor} ${tiposDeFernet[i].medida} L`
+    let litrosPorFardo = tiposDeFernet[i].medida* tiposDeFernet[i].unidadesPorBulto(tiposDeFernet[i].medida)
     litrosPorFardoDeFernet[labelFernet] = litrosPorFardo
-    ;
-    
 }
-let botonCalcularFardos = document.getElementById("botonCalcularFardos")
-    botonCalcularFardos.addEventListener("click", () =>{
-        sectorMuestraDeCalculo.innerHTML = "";
-        for (let i = 0; i < nroInputsGaseosa.length; i++) {
+}
+CalculadoraFardosGaseosa()
+CalculadoraFardosCerveza()
+CalculadoraFardosFernet()
+
+function calculoTotalGaseosa () {
+    for (let i = 0; i < nroInputsGaseosa.length; i++) {
         let inputNro = document.getElementById(`inputGaseosa${i}`).value
         let selectNro = document.getElementById (`selectGaseosa${i}`)
-        let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+        let optionText = selectNro.querySelector (`[value="${selectNro.value}"]`).innerText
         let litrosPorFardoNro = litrosPorFardoDeGaseosa[optionText]
-        let muestraDeDatos = (acumGaseosa20*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatos = (acumGaseosa.value*inputNro/100)/litrosPorFardoNro
         let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
-        
         let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
         let muestraResultadoG = document.createElement("p")
         muestraResultadoG.className ="text-bg-dark text-center";
         muestraResultadoG.textContent = muestraDeDatosFinal;
         sectorMuestraDeCalculo.appendChild(muestraResultadoG);
-        }
-        
-        for (let i = 0; i < nroInputsCerveza.length; i++) {
-            let inputNro = document.getElementById(`inputCerveza${i}`).value
-            let selectNro =document.getElementById (`selectCerveza${i}`)
-            let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
-            let litrosPorFardoNro = litrosPorFardoDeCerveza[optionText]
-            let muestraDeDatos = (acumCerveza20*inputNro/100)/litrosPorFardoNro
-            let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
-            
-            let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
-            let muestraResultadoC = document.createElement("p");
-            muestraResultadoC.className ="text-bg-dark text-center"
-            muestraResultadoC.textContent = muestraDeDatosFinal;
-            sectorMuestraDeCalculo.appendChild(muestraResultadoC);
-            }
+    }
+}
 
-            for (let i = 0; i < nroInputsFernet.length; i++) {
-                let inputNro = document.getElementById(`inputFernet${i}`).value
-                let selectNro =document.getElementById (`selectFernet${i}`)
-                let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
-                let litrosPorFardoNro = litrosPorFardoDeFernet[optionText]
-                let muestraDeDatos = (acumFernet20*inputNro/100)/litrosPorFardoNro
-                let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
-                
-                let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
-                let muestraResultadoF = document.createElement("p");
-                muestraResultadoF.className ="text-bg-dark text-center"
-                muestraResultadoF.textContent = muestraDeDatosFinal;
-                sectorMuestraDeCalculo.appendChild(muestraResultadoF);
+function calculoTotalCerveza () {
+    for (let i = 0; i < nroInputsCerveza.length; i++) {
+        let inputNro = document.getElementById(`inputCerveza${i}`).value
+        let selectNro =document.getElementById (`selectCerveza${i}`)
+        let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+        let litrosPorFardoNro = litrosPorFardoDeCerveza[optionText]
+        let muestraDeDatos = (acumCerveza*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
+        let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
+        let muestraResultadoC = document.createElement("p");
+        muestraResultadoC.className ="text-bg-dark text-center"
+        muestraResultadoC.textContent = muestraDeDatosFinal;
+        sectorMuestraDeCalculo.appendChild(muestraResultadoC);
+    }
+}
+
+function calculoTotalFernet () {
+    for (let i = 0; i < nroInputsFernet.length; i++) {
+        let inputNro = document.getElementById(`inputFernet${i}`).value
+        let selectNro =document.getElementById (`selectFernet${i}`)
+        let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
+        let litrosPorFardoNro = litrosPorFardoDeFernet[optionText]
+        let muestraDeDatos = (acumFernet*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
         
-                }
-            
-    })
+        let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo")
+        let muestraResultadoF = document.createElement("p")
+        muestraResultadoF.className ="text-bg-dark text-center"
+        muestraResultadoF.textContent = muestraDeDatosFinal
+        sectorMuestraDeCalculo.appendChild(muestraResultadoF)
+    }
+}
+
+let botonCalcularFardos = document.getElementById("botonCalcularFardos")
+    botonCalcularFardos.addEventListener("click", () =>{
+        sectorMuestraDeCalculo.innerHTML = "";
+        calculoTotalGaseosa ()
+        calculoTotalCerveza ()
+        calculoTotalFernet ()
+        })
 
 ///////////////////////////////////////
 //////                          ///////
 //////  AGREGAR AL CARRITO     ///////
 //////                          ///////
 ///////////////////////////////////////
-
-
-
 
 function agregarAlCarrito(elemento){
 
