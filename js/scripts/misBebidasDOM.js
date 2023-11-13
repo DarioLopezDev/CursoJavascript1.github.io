@@ -24,63 +24,9 @@ import {nroInputsFernet} from "./controladorDeFernet.js"
 let deposito = []
 
 //Creo las variables donde se almacenan las bebidas dependiendo de su tipo.
-export const tiposDeGaseosas = []
-export const tiposDeCervezas = []
-export const tiposDeFernet = []
-
-//Creo la funcion que toma los Datos del archivo bebidas.json y los convierte en objetos guardados en un array dentro de la variable deposito
-
-const cargarDeposito = async () => {
-    const resp = await fetch ("./js/scripts/bebidas.json")
-    const dataBebidas = await resp.json ()
-
-    for (let bebida of dataBebidas){
-        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
-        deposito.push(bebidaNueva)
-            if (bebidaNueva.tipo == "Gaseosa") {
-                tiposDeGaseosas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Cerveza") {
-                tiposDeCervezas.push(bebidaNueva)
-            }
-            if (bebidaNueva.tipo == "Fernet") {
-                tiposDeFernet.push(bebidaNueva)
-            }
-    }
-//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
-    sessionStorage.setItem("deposito", JSON.stringify(deposito))
-//Almacena en el sessionStorage la key tiposDeGaseosas la cual almacena todos los datos de la variable tiposDeGaseosa
-    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
-//Almacena en el sessionStorage la key tiposDeCervezas la cual almacena todos los datos de la variable tiposDeCerveza
-    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
-//Almacena en el sessionStorage la key tiposDeFernet la cual almacena todos los datos de la variable tiposDeFernet
-    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
-
-//Una vez cargada la variable "deposito" muestra visualmente en el navegador todas mis bebidas
-    mostrarCatalogoDOM(deposito)
-}
-
-//Establece una Condicion si existe deposito en el sessionStorage
-if(sessionStorage.getItem("deposito")){
-//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe,borra todo del sessionStorage, ejecuta la funcion cargarDeposito y muestra el catalogo,
-for (let i = 0; i < sessionStorage.length; i++) {
-    const key = sessionStorage.key(i);
-    sessionStorage.removeItem(key);
-  }
-cargarDeposito()
-mostrarCatalogoDOM(deposito)
-}else{
-//si no esta cargado entonces ejecuta la funcion cargar deposito y muestra el catalogo
-    cargarDeposito()
-    mostrarCatalogoDOM(deposito)
-}
-
-//se utiliza en linea 289
-let litrosPorFardoDeGaseosa = {}
-let litrosPorFardoDeCerveza = {}
-let litrosPorFardoDeFernet = {}
-//
-let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
+export let tiposDeGaseosas = []
+export let tiposDeCervezas = []
+export let tiposDeFernet = []
 
 //CREO EL CONSTRUCTOR
 class Bebida{
@@ -121,14 +67,95 @@ class Bebida{
         return this.cantidad
     }
 } 
-//esta funcion vacia todo el storage para poder recargar la pagina y no me duplique los elementos cargados
-function liberarStorage () {
-    localStorage.removeItem ("deposito")
-    localStorage.removeItem ("tiposDeGaseosas")
-    localStorage.removeItem ("tiposDeCervezas")
-    localStorage.removeItem ("tiposDeFernet")
-    localStorage.removeItem ("arrayDatosIngresados")
-    }
+
+//Creo la funcion que toma los Datos del archivo bebidas.json y los convierte en objetos guardados en un array dentro de la variable deposito
+const cargarDeposito = async () => {
+    const resp = await fetch ("./js/scripts/bebidas.json")
+    const dataBebidas = await resp.json ()
+     for (let bebida of dataBebidas){
+        let bebidaNueva = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+        deposito.push(bebidaNueva)
+            if (bebidaNueva.tipo == "Gaseosa") {
+                tiposDeGaseosas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Cerveza") {
+                tiposDeCervezas.push(bebidaNueva)
+            }
+            if (bebidaNueva.tipo == "Fernet") {
+                tiposDeFernet.push(bebidaNueva)
+            }
+    } 
+
+//Almacena en el sessionStorage la key deposito la cual almacena todos los datos de la variable deposito
+    sessionStorage.setItem("deposito", JSON.stringify(deposito))
+//Almacena en el sessionStorage la key tiposDeGaseosas la cual almacena todos los datos de la variable tiposDeGaseosa
+    sessionStorage.setItem("tiposDeGaseosas", JSON.stringify(tiposDeGaseosas))
+//Almacena en el sessionStorage la key tiposDeCervezas la cual almacena todos los datos de la variable tiposDeCerveza
+    sessionStorage.setItem("tiposDeCervezas", JSON.stringify(tiposDeCervezas))
+//Almacena en el sessionStorage la key tiposDeFernet la cual almacena todos los datos de la variable tiposDeFernet
+    sessionStorage.setItem("tiposDeFernet", JSON.stringify(tiposDeFernet))
+
+//Una vez cargada la variable "deposito" muestra visualmente en el navegador todas mis bebidas
+    mostrarCatalogoDOM(deposito)
+    console.log(tiposDeGaseosas.length)
+}
+
+//Establece una Condicion si existe deposito en el sessionStorage
+if(sessionStorage.getItem("deposito")){
+//si ya esta cargado en el sessionStorage, busca la key deposito, si ya existe,borra todo del sessionStorage, ejecuta la funcion cargarDeposito y muestra el catalogo,
+
+for(let bebida of JSON.parse(sessionStorage.getItem(`deposito`)) ?? []){
+    let bebidadeposito = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+    deposito.push(bebidadeposito)
+}
+
+for(let bebida of JSON.parse(sessionStorage.getItem("tiposDeGaseosas")) ?? []){
+    let gaseosadeposito = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+    tiposDeGaseosas.push(gaseosadeposito)
+}
+
+for(let bebida of JSON.parse(sessionStorage.getItem("tiposDeCervezas")) ?? []){
+    let cervezadeposito = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+    tiposDeCervezas.push(cervezadeposito)
+}
+
+for(let bebida of JSON.parse(sessionStorage.getItem("tiposDeFernet")) ?? []){
+    let fernetdeposito = new Bebida (bebida.id, bebida.tipo, bebida.marca, bebida.sabor, bebida.medida, bebida.precio, bebida.imagen)
+    tiposDeFernet.push(fernetdeposito)
+}
+
+for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    sessionStorage.removeItem(key);
+}
+
+cargarDeposito()
+mostrarCatalogoDOM(deposito)
+
+console.log(deposito)
+console.log(tiposDeFernet)
+console.log(tiposDeFernet[0])
+console.log(tiposDeCervezas)
+console.log(tiposDeCervezas[0])
+console.log(tiposDeGaseosas)
+console.log(tiposDeGaseosas[0])
+}else{
+//si no esta cargado entonces ejecuta la funcion cargar deposito y muestra el catalogo
+cargarDeposito()
+}
+
+console.log(tiposDeGaseosas[0])
+
+//DESDE LA LINEA 70 A LA 148 HAY PROBLEMAS, CARGA DOBLE Y LA PRIMERA VEZ NO ANDA, DESPUES DE ACTUALIZAR YA ANDA.. 
+
+//se utiliza en linea 289
+let litrosPorFardoDeGaseosa = {}
+let litrosPorFardoDeCerveza = {}
+let litrosPorFardoDeFernet = {}
+//
+let productosCarrito = JSON.parse(sessionStorage.getItem(`carrito`)) ?? []
+
+
 //esta funcion muestra el catalogo de lo que tenga cargado el array que recibe por parametro, inyecta codigo HTML para visualizar los productos.
 function mostrarCatalogoDOM(array){
 
@@ -273,7 +300,6 @@ sessionStorage.setItem ("arrayLitrosCalculados",JSON.stringify(arrayLitrosCalcul
 frioOCalorResultado.value == "Calor" ? frioOCalor.value = 2 : frioOCalor.value = 1
 return arrayLitrosCalculados
 }
-
 //limpia la calculadora, deja en blanco todos los casilleros
 function limpiarCalc() {
     cantAdultos.value = ""
@@ -310,7 +336,7 @@ for (let i = 0; i < tiposDeGaseosas.length; i++) {
 function CalculadoraFardosCerveza() {
 for (let i = 0; i < tiposDeCervezas.length; i++) {
     labelCerveza = `${tiposDeCervezas[i].marca} ${tiposDeCervezas[i].sabor} ${tiposDeCervezas[i].medida} L`
-    let litrosPorFardo = tiposDeCervezas[i].medida* tiposDeCervezas[i].unidadesPorBulto(tiposDeCervezas[i].medida)
+    let litrosPorFardo = tiposDeCervezas[i].medida* tiposDeCervezas[i].unidadesPorBulto()
     litrosPorFardoDeCerveza[labelCerveza] = litrosPorFardo
 }
 }
@@ -318,7 +344,7 @@ for (let i = 0; i < tiposDeCervezas.length; i++) {
 function CalculadoraFardosFernet() {
 for (let i = 0; i < tiposDeFernet.length; i++) {
     labelFernet = `${tiposDeFernet[i].marca} ${tiposDeFernet[i].sabor} ${tiposDeFernet[i].medida} L`
-    let litrosPorFardo = tiposDeFernet[i].medida* tiposDeFernet[i].unidadesPorBulto(tiposDeFernet[i].medida)
+    let litrosPorFardo = tiposDeFernet[i].medida* tiposDeFernet[i].unidadesPorBulto()
     litrosPorFardoDeFernet[labelFernet] = litrosPorFardo
 }
 }
@@ -348,7 +374,7 @@ function calculoTotalCerveza () {
         let selectNro =document.getElementById (`selectCerveza${i}`)
         let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
         let litrosPorFardoNro = litrosPorFardoDeCerveza[optionText]
-        let muestraDeDatos = (acumCerveza*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatos = (acumCerveza.value*inputNro/100)/litrosPorFardoNro
         let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
         let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo");
         let muestraResultadoC = document.createElement("p");
@@ -364,7 +390,7 @@ function calculoTotalFernet () {
         let selectNro =document.getElementById (`selectFernet${i}`)
         let optionText = selectNro.querySelector(`[value="${selectNro.value}"]`).innerText
         let litrosPorFardoNro = litrosPorFardoDeFernet[optionText]
-        let muestraDeDatos = (acumFernet*inputNro/100)/litrosPorFardoNro
+        let muestraDeDatos = (acumFernet.value*inputNro/100)/litrosPorFardoNro
         let muestraDeDatosFinal = [`${muestraDeDatos.toFixed(0)} fardos de ${optionText}`]
         
         let sectorMuestraDeCalculo = document.getElementById("sectorMuestraDeCalculo")
